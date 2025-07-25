@@ -1,0 +1,63 @@
+
+\section{Best Practices in Code-Survey Method}
+
+The Code-survey method, especially when integrated with large language models (LLMs), requires carefully designed practices in Survey to ensure the accuracy and relevance of responses. The key idea is, to just create the survey for humans and allow LLM to perform on it. You can easily apply other approaches.
+
+Below are some of the best practices to achieve reliable results:
+
+\begin{enumerate}
+    \item \textbf{Use Pre-Defined Tags and Categories:} To avoid hallucination or random answers, it is crucial to provide structured, closed-ended questions. Pre-defined tags such as ``bug," ``new feature," or ``performance improvement" help standardize responses and reduce ambiguity.
+    
+    \item \textbf{Incorporate a LLM Agent workflow:} LLMs may need to review their answers multiple times to improve accuracy. Implementing some feedback loop, ReAct or CoT planning approaches with memory allows the model to re-evaluate the questions and select the most appropriate response, enhancing overall data quality.
+    
+    \item \textbf{Allow for ``I Don’t Know" Responses:} When the LLM encounters unfamiliar or complex questions, providing an option to answer ``I don’t know" prevents random or misleading responses. This is particularly useful when domain knowledge is limited or incomplete.
+    
+    \item \textbf{Pilot Testing and Iterative Refinement:} Prior to full deployment, conducting a pilot test helps identify potential issues with question clarity and LLM understanding. Iterative refinement of questions based on these trials ensures logical consistency and improves data reliability.
+    
+    \item \textbf{Consistency and Data Validation:} Post-survey, apply validation checks to ensure consistency across responses. Detecting and filtering out illogical or contradictory answers is essential to maintaining the integrity of the data set.
+\end{enumerate}
+
+By following these best practices, the Code-survey method can leverage LLMs effectively, mitigating the risks of hallucination and improving the reliability of responses in technical domains such as Linux kernel commit analysis.
+
+
+\section{Limitations}
+
+While \emph{Code-survey} offers significant advancements in analyzing the evolution of large software systems, it is not without limitations:
+
+\begin{itemize}
+    \item \textbf{Dependency on Data Quality}: The accuracy of \emph{Code-survey} is heavily reliant on the quality and completeness of the input data. Incomplete commit messages or fragmented email discussions can lead to gaps in the structured data, potentially obscuring important aspects of feature evolution.
+
+    \item \textbf{LLMs can make mistakes, just like humans}: Although LLMs like GPT-4 are powerful, they are not infallible. Misinterpretations of commit messages or developer communications can result in inaccurate data structuring. However, this is not a problem—humans make mistakes too, and LLMs can be treated like inexperienced or untrained individuals in some cases. For example, LLMs may hallucinate, similar to how a graduate student might imagine or fill in gaps. They are more prone to filling survey responses randomly, answering questions too quickly without careful thought, or missing important details in the questions. To mitigate these issues, careful survey design is essential to guide the model’s responses more effectively. The same technology design for human survey can be directly applied to LLM surveys.
+
+    \item \textbf{Human Expert Oversight Requirement}: The performance of Code-survey largely depends on the quality of the survey. Despite automation, human expertise remains essential for designing effective surveys, evaluating results, and ensuring the contextual relevance of the structured data. This dependency can limit the scalability of \emph{Code-survey} in scenarios where expert availability is constrained.
+\end{itemize}
+
+\section{Future Work}
+
+\emph{Code-survey} shows great potential in organizing and analyzing unstructured software data, but several areas need improvement and expansion:
+
+\subsection{Combining Linux eBPF Mails and Other Sources}
+
+While the current focus is primarily on commit data, we plan to extend the approach to include Linux eBPF mailing lists and other relevant data sources. This expansion will allow a more complete understanding of feature lifecycles and development discussions, providing more robust insights into the design and maintenance process.
+
+\subsection{Improved Evaluation of LLM-Generated Survey Data}
+
+While LLMs like GPT-4o generate structured data from unstructured inputs, issues like hallucination remain. Future work will develop validation frameworks to improve accuracy, benchmark results against curated datasets, and involve human experts in refining LLM outputs.
+
+\subsection{Performance Enhancement with LLM Agents}
+
+The current proof-of-concept demonstrates automation but with sub optimal performance and accuracy. Future efforts will evaluate the performance of fully automate the process using more advanced models (e.g., o1) and multi-agent systems to improve the performance. Additionally, ensuring the structured data is compatible and usable with machine analysis tools is crucial.
+
+\subsection{Application to Other Projects}
+
+Though \emph{Code-survey} has focused on the Linux eBPF subsystem, the method is adaptable to any Linux subststems ot other projects like Kubernetes, LLVM, and Apache. Expanding to these repositories will test its scalability and versatility, requiring adjustments for different development practices.
+
+\subsection{Direct Structuring of Code and Functions}
+
+Currently, \emph{Code-survey} relies on commits and mailing lists. Future research will extend this to code and functions, turning technical elements into structured, query-able data or graphs with attributes. This will enable a large number of algorithms and queries to be performed on it and provide deeper insights into the actual software implementations and evolution.
+
+\subsection{Integration of Additional Data Sources}
+
+Future work will incorporate data from code reviews, issue trackers, and documentation to provide a fuller picture of feature evolution and development. This holistic approach will offer more detailed insights into the software development lifecycle.
+
+By pursuing these improvements, \emph{Code-survey} aims to become a comprehensive tool for analyzing complex software systems, benefiting both developers and empirical software researchers.

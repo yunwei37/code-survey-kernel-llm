@@ -1,0 +1,58 @@
+\section{Best Practices in the \emph{Code-Survey} Method}
+\label{sec:best_practices}
+The \emph{Code-Survey} methodology, particularly when integrated with Large Language Models (LLMs), requires carefully designed practices to ensure the accuracy and relevance of responses. The key principle is to create surveys intended for human participants and allow LLMs to perform on them; this approach leverages existing methodologies and can be easily adapted.
+
+Below are some best practices to achieve reliable results:
+
+\begin{enumerate}
+    \item \textbf{Use Predefined Tags and Categories}: To minimize hallucinations or random answers from the LLM, it is essential to provide structured, closed-ended questions. Utilizing predefined tags such as ``Bug Fix,'' ``New Feature,'' or ``Performance Optimization'' helps standardize responses and reduces ambiguity.
+
+    \item \textbf{Implement LLM Agent Workflows}: LLMs may need to review and refine their answers multiple times to improve accuracy. Incorporating feedback loops and techniques like ReAct~\cite{yao2022react} allows the model to re-evaluate its responses, enhancing overall data quality.
+
+    \item \textbf{Allow for ``I'm Not Sure'' Responses}: Providing an option for the LLM to indicate uncertainty prevents random or misleading answers when encountering unfamiliar or complex questions. This is particularly useful in domains where the LLM's knowledge may be limited or incomplete.
+
+    \item \textbf{Pilot Testing and Iterative Refinement}: Conducting pilot tests prior to full deployment helps identify potential issues with question clarity and LLM understanding. Iterative refinement of survey questions based on these trials ensures logical consistency and improves data reliability.
+
+    \item \textbf{Ensure Consistency and Perform Data Validation}: Design questions for Consistency. After the survey, apply validation checks to ensure consistency across responses. Detecting and filtering out illogical or contradictory answers is essential for maintaining the integrity of the dataset.
+\end{enumerate}
+
+By adhering to these best practices, the \emph{Code-Survey} method can effectively leverage LLMs, mitigating risks such as hallucination and improving the reliability of responses in technical domains like Linux kernel commit analysis.
+
+\section{Limitations}
+\label{sec:limitations}
+
+While \emph{Code-Survey} offers significant advancements in analyzing the evolution of large software systems, it has certain limitations:
+
+\begin{enumerate}
+    \item \textbf{Dependency on Data Quality}: The accuracy of \emph{Code-Survey} is heavily dependent on the quality and completeness of the input data. Incomplete commit messages, patches or fragmented email discussions can lead to gaps in the structured data, potentially obscuring important aspects of feature evolution.
+
+    \item \textbf{Limitations of LLMs}: Although LLMs like GPT-4o are powerful, they are not infallible. Misinterpretations of commit messages or developer communications can result in inaccurate data structuring~\cite{ji2023survey}. LLMs may sometimes generate plausible but incorrect information (hallucinations) or miss important details in the questions~\cite{bubeck2023sparks}. To mitigate these issues, careful survey design and validation are essential to guide the model's responses more effectively.
+
+    \item \textbf{Requirement for Human Expert Feedback}: Despite automation, human expertise remains essential for designing effective surveys, evaluating results, and ensuring the contextual relevance of the structured data. This dependency can limit the scalability of \emph{Code-Survey} in scenarios where expert availability is constrained.
+\end{enumerate}
+
+\section{Future Work}
+\label{sec:future}
+
+While \emph{Code-Survey} demonstrates significant potential in organizing and analyzing unstructured software data, several areas warrant further exploration and improvement:
+
+\subsection{Enhanced Evaluation of LLM-Generated Survey Data}
+
+To address challenges such as hallucinations and inaccuracies in LLM outputs, future work will focus on developing robust validation frameworks. This includes benchmarking results against curated datasets and involving human experts in refining LLM outputs. Enhancing the reliability of the structured data will improve the overall effectiveness of \emph{Code-Survey}.
+
+\subsection{Performance Optimization with Advanced LLMs}
+
+The current proof-of-concept showcases automation but with room for performance improvements if no human feedback is procided. Future efforts will explore the use of more advanced models, such as O1~\cite{o1}, and the implementation of multi-agent systems to optimize performance and accuracy. Ensuring compatibility with machine analysis tools is crucial for seamless integration into existing workflows.
+
+\subsection{Application to Other Software Projects}
+
+While \emph{Code-Survey} has been applied to the Linux eBPF subsystem, its methodology can be directly applied to other projects like Kubernetes, LLVM, and Apache. Expanding to these repositories will test its scalability and versatility, potentially requiring adjustments to accommodate different development practices and environments.
+
+\subsection{Incorporation of Additional Data Sources like Code, Trace, and Execution Flow}
+
+Due to the time limited, the case study currently mainly focus on analyzing the commit and features. Extending \emph{Code-Survey} to incorporate a wider range of data sources—such as source code, execution traces, and execution flows—will provide a more comprehensive understanding of software systems. Direct structuring of code and functions, transforming technical elements into structured, query-able data or graphs with attributes, will enable advanced analyses. This approach will facilitate a deeper exploration of software implementations, performance characteristics, and evolutionary patterns.
+
+By pursuing these enhancements, \emph{Code-Survey} aims to become a comprehensive tool for analyzing complex software systems, benefiting both developers and researchers in the field of software engineering.
+
+% \bibliographystyle{IEEEtran}
+% \bibliography{references}

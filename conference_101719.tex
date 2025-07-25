@@ -1,0 +1,328 @@
+% \documentclass[conference]{IEEEtran}
+% \IEEEoverridecommandlockouts
+\documentclass[sigconf,review,anonymous]{acmart}
+\renewcommand\footnotetextcopyrightpermission[1]{}
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+% \usepackage{cite}
+
+\settopmatter{printfolios=true}
+% make references clickable 
+\usepackage[]{hyperref}
+
+\settopmatter{printfolios=true}
+\settopmatter{printacmref=false}
+\pagestyle{plain}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{xspace}
+\usepackage{cleveref}
+\usepackage{balance}
+\usepackage{url}
+\usepackage{siunitx}
+\usepackage{comment}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{makecell}
+\usepackage{algorithm2e}
+\usepackage{multirow}
+% \usepackage{minted}
+\usepackage{graphicx}
+\usepackage[thicklines]{cancel}
+\usepackage{caption}
+% \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    % T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\author{Yusheng Zheng}
+\affiliation{%
+  \institution{Eunomia. Inc.}
+  \country{USA}
+}
+\email{yunwei356@gmail.com}
+\author{Yiwei Yang}
+\affiliation{%
+  \institution{UC Santa Cruz}
+  \country{USA}
+}
+\email{yyang363@ucsc.edu}
+
+\author{Haoqin Tu}
+\affiliation{%
+  \institution{UC Santa Cruz}
+  \country{USA}
+}
+\email{tuisaac163@gmail.com}
+
+\author{Yuxi Huang}
+\affiliation{% 
+  \institution{Eunomia. Inc.}
+  \country{USA}
+}
+\email{yuxi4096@gmail.com}
+
+% \title{Do we really know how the system works? Automatic agent system for code behavior analysis}
+\title{Code-Survey: An LLM-Driven Methodology for Analyzing Large-Scale Codebases}
+
+\newcommand{\hq}[1]{\textcolor{blue}{[Haoqin: #1]}}
+
+\begin{document}
+
+% \thanks{Identify applicable funding agency here. If none, delete this.}
+
+
+% \author{
+
+% \IEEEauthorblockN{1\textsuperscript{st} Yusheng Zheng}
+% \IEEEauthorblockA{\textit{Eunomia. Inc.} \\
+% % \textit{name of organization (of Aff.)}\\
+% City, Country \\
+% email address or ORCID}
+% \and
+
+% \IEEEauthorblockN{2\textsuperscript{nd} Yiwei Yang}
+% \IEEEauthorblockA{\textit{UC Santa Cruz} \\
+% % \textit{name of organization (of Aff.)}\\
+% City, Country \\
+% email address or ORCID}
+% }
+\begin{abstract} 
+
+Modern software systems like the Linux kernel are among the world's largest and most intricate codebases, continually evolving with new features and increasing complexity. Understanding these systems poses significant challenges due to their scale and the unstructured nature of development artifacts such as commits and mailing list discussions. We introduce Code-Survey, the first LLM-driven methodology designed to systematically explore and analyze large-scale codebases. The central principle behind Code-Survey is to treat LLMs as human participants, acknowledging that software development is also a social activity and thereby enabling the application of established social science techniques. By carefully designing surveys, Code-Survey transforms unstructured data—such as commits, emails—into organized, structured, and analyzable datasets. This enables quantitative analysis of complex software evolution and uncovers valuable insights related to design, implementation, maintenance, reliability, and security.
+
+To demonstrate the effectiveness of Code-Survey, we apply it to the Linux kernel's eBPF subsystem. We construct the Linux-bpf dataset, comprising over 670 features and 16,000 commits from the Linux community. Our quantitative analysis uncovers important insights into the evolution of eBPF, such as development patterns, feature interdependencies, and areas requiring attention for reliability and security—insights that have been initially validated by eBPF experts. Furthermore, Code-Survey can be directly applied to other subsystems within Linux and to other large-scale software projects. By providing a versatile tool for systematic analysis, Code-Survey facilitates a deeper understanding of complex software systems, enabling improvements across a variety of domains and supporting a wide range of empirical studies. The code and dataset is open-sourced in https://github.com/eunomia-bpf/code-survey
+\end{abstract}
+
+% \begin{abstract}
+% Researchers often refer to the Linux kernel as a background system, but do they truly understand how one of the world's largest systems is designed?\hq{what is `a background system'? I think we can just rephrase this sentence in a declarative way: Linux kernel is a fundamental component in computer science, but researchers fail to fully comprehend such complex system in design.}
+% Unlike research projects with clear design goals, real-world systems evolves as new features are continuously added over time. For instance, eBPF in Linux has gained significant attention in both industry and the community. While bpf\_link has been in the kernel for four years and plays a key role in connecting different runtime components to reduce complexity—supporting use cases like observability, security, networking, drivers, and even potential disk I/O and memory management—it remains rarely discussed outside of Linux source code.
+
+% With the rise of AI and LLM Agents, we propose the first approach to help researchers better understand real-world systems and uncover insights related to design, implementation, maintenance, reliability and security inside them. 
+% % Code-survey is the first step toward bridging the gap between design, implementation, maintenance, reliability and security in one of the largest system in the world. 
+% We introduce Code-survey, an automatic framework designed for transforming unstructured Linux kernel commits and emails into structured data, which enables human experts and LLM agents to efficiently query and analyze it.
+% To further verify the effectiveness of our Code-survey, we leverage the technique and construct the Linux-bpf dataset. Our new data consists of more than 670 features, 12k commits, and 150k mails in the Linux community.
+% Instead of generating code, answering documents or static analysis, the results reveal important insights about the eBPF subsystem\hq{What is the insight?}, confirmed by experts\hq{In which aspect?}. 
+% Code-survey can also be applied to other subsystems\hq{For example?} directly.
+
+% % We introduce Code-survey and the Linux-bpf dataset, which consist of 670+ features, 12k+ commits, 150k+ mails. Instead of generating code, answering documents or static analysis, Code-survey transforms unstructured Linux kernel commits and mails into structured data, enabling human experts or llm agents to query and analyze it. The results reveal important insights about the eBPF subsystem, confirmed by experts. Code-survey can also be applied to other subsystems directly.
+
+% \end{abstract}
+
+
+\maketitle
+
+\section{Introduction}
+
+Software systems are increasingly complex, with real-world applications often requiring continuous development over time. Unlike research projects with clearly defined goals and controlled development processes, real-world systems evolve organically. Features are added incrementally, bugs are fixed, and design decisions may be modified years after initial implementation. This complexity is further exacerbated by the need to balance backward compatibility, feature requests, performance improvements, and security patches. As systems evolve, tracing the original intent behind design decisions or understanding the rationale for modifications becomes difficult. This lack of transparency often leads to technical debt, regressions, and challenges in maintaining system reliability.
+
+One of the most prominent examples of a continuously evolving real-world system is the Linux kernel. Serving as the backbone of countless devices and platforms—from cloud servers to mobile devices—the Linux kernel must support a wide array of features while maintaining rigorous performance standards. The \textit{extended Berkeley Packet Filter} (eBPF)\cite{ebpf} subsystem exemplifies this complexity, as it supports critical functionalities such as observability\cite{shen2023network}, networking\cite{vieira2020fast}, and security\cite{deri2019combining}. Despite its significance, much of the development history and design rationale behind eBPF remains underexplored. For example, features like \texttt{bpf\_link}\cite{bpflink}, which provide a new abstraction for attaching programs to events, have been part of the Linux source code for several years but have received little attention outside of kernel developers. Similarly, the increasing use of kfuncs \cite{kfuncs} as replacements for helpers, the growing complexity of control-plane applications, and efforts toward making eBPF Turing complete have not been extensively explored in the broader community.
+
+Understanding the evolution of features in large, complex codebases is a significant challenge in software development\cite{godfrey2008past,mens2008introduction}. Traditional methods, such as static analysis and manual code review, are limited in capturing the full context of a system's growth and change, and require substantial human effort. Unstructured data sources, like commit messages and mailing list discussions, contain valuable insights but are difficult to analyze systematically. Consequently, important information about design decisions, feature evolution, and system behavior is often hidden within large volumes of unstructured text. This makes it nearly impossible to answer questions such as: ``Why was this feature added?'', ``How has this feature evolved?'', or ``What were the discussions that led to this change?''
+
+Recent advancements in artificial intelligence, particularly in Large Language Models (LLMs) like GPT-4o\cite{gpt4o} and O1~\cite{o1}, have opened new opportunities to address these challenges. LLMs have shown great promise in automating software engineering tasks such as code generation\cite{zheng2024kgent}, bug detection\cite{li2024enhancing}, debugging\cite{chen2023teaching}, and error fixing\cite{deligiannis2023fixing}. However, most current applications of LLMs focus on well-defined tasks involving source code or documented APIs. Little work has explored how LLMs can be applied to understand the long-term evolution of large-scale, real-world software systems.
+
+In this paper, we introduce \emph{Code-survey}, a novel methodology that leverages Large Language Models (LLMs) to systematically transform unstructured data—such as commit histories and emails\cite{linux,tan2019communicate,schneider2016differentiating}—into structured datasets for large-scale software analysis. Drawing inspiration from sociological surveys that utilize human participants to gather extensive data, Code-survey employs LLMs to emulate this process, enabling efficient and scalable analysis of software development artifacts. By focusing on the vast amount of text produced during software development, Code-survey allows us to answer questions that were previously difficult to tackle using only structured data in large real-world systems. Through data analysis enabled by Code-survey, we can explore questions such as:
+
+
+\begin{itemize}
+    \item ``How do new feature introductions impact the stability and performance of existing kernel components?''
+    \item ``Are there identifiable phases in the lifecycle of a feature, such as initial development, stabilization, and optimization?''
+    \item ``How has the functionality of a specific eBPF feature evolved over successive commits?''
+    \item ``Which components or files in the Linux kernel have the highest bug frequency?''
+    \item ``What lessons can be learned from the development history of kernel eBPF that can be applied to improving other eBPF runtimes?''
+    \item ``What dependencies have emerged between features and component?''
+\end{itemize}
+
+To demonstrate the efficacy of Code-survey, we apply it to the \textit{Linux-bpf dataset}, which contains over 670 features, 15,000 commits, and 150,000 emails related to the development of the eBPF subsystem. Through this structured dataset, we uncover new insights into the design and evolution of features like \texttt{bpf\_link}, and highlight trends that were previously hidden within the unstructured data. These insights have been initially confirmed by eBPF experts.
+
+The key contributions of this paper are as follows:
+
+\begin{itemize}
+    \item We introduce \emph{Code-survey}, a novel methodology that leverages LLMs to transform unstructured data produced in software development into structured datasets via surveys, enabling systematic analysis of software evolution. To the best of our knowledge, \emph{Code-survey} is the first methodology that leverages LLMs for the systematic analysis of large-scale codebases.
+    \item We present the \textit{Linux-bpf dataset}, a structured dataset comprising over 670 features, 15,000 commits, and 150,000 emails related to the eBPF subsystem in the Linux kernel.
+    \item We apply the \emph{Code-survey} methodology to build an LLM-driven agent system, allowing us to perform systematic analysis on the \textit{Linux-bpf dataset}.
+    \item We demonstrate that the \emph{Code-survey} methodology reveals new insights into the evolution of eBPF kernel features that are impossible to uncover using traditional methods. By combining traditional data analysis methods with eBPF experts' domain knowledge and historical context, we also initially verified the consistency and correctness of the data.
+    \item We identify and highlight under-explored areas of eBPF to support various use cases with the help of \emph{Code-survey}, pointing out interesting research directions.
+\end{itemize}
+
+The remainder of this paper is structured as follows. We review background in Section~\ref{sec:related}, followed by a detailed explanation of the Code-survey methodology in Section~\ref{sec:methodology}. Section~\ref{sec:analysis} presents our analysis of the Linux-bpf dataset and the insights gained from it. Section~\ref{sec:best_practices} discusses best practices when designing AI-based surveys. Sections~\ref{sec:limitations} and~\ref{sec:future} conclude with a discussion of current limitations and future work. All artifacts are open-sourced at \url{https://github.com/eunomia-bpf/code-survey}.
+
+\section{Background}
+\label{sec:related}
+
+This section discuss the role of Large Language Models in software development, the complexities of Linux kernel development, and the importance of survey methodologies in empirical software engineering research.
+
+\subsection{LLMs in Software Development}
+
+Large Language Models (LLMs), such as GPT-4o and Claude, have significantly impacted software development~\cite{jin2024llms}, particularly in automating tasks like code generation, debugging, and testing. Tools like GitHub Copilot~\cite{copilot} leverage these models to enhance developer productivity by providing intelligent code suggestions. Despite these advancements, challenges such as hallucinations—where incorrect but plausible code is generated—still persist~\cite{fan2023large,ji2023survey}. Moreover, most research focuses on well-defined tasks, and exploring the design and evolution of large-scale software systems using LLMs remains underexplored.
+
+Additionally, using LLMs for summarizing test results, decision-making, and converting unstructured data into structured formats is becoming increasingly common in both academia~\cite{jin2024comprehensive,iourovitski2024grade,patel2024lotus} and industry~\cite{llmnvida}. This capability is especially valuable in environments where massive amounts of unstructured data—such as logs, emails, or messages—exist. The ability to systematically extract insights from this data enables more efficient analysis and has been widely applied to tasks like market research~\cite{brand2023using}.
+
+\subsection{Software Evolution and Its Challenges}
+Software evolution involves the continuous modification and adaptation of systems to meet changing requirements~\cite{lehman1996laws}. According to Lehman's laws, systems must evolve to remain useful, but this often increases complexity without proactive management. In large-scale systems like the Linux kernel~\cite{linux}, evolution is non-linear, involving numerous contributors and revisions, which leads to intricate interdependencies~\cite{israeli2010linux}. The Linux kernel generates vast unstructured data, including commit logs and email threads, which traditional analysis methods struggle to process~\cite{mens2008introduction}. These artifacts contain rich contextual information about design decisions, but their volume and unstructured format hinder conventional techniques. Additionally, evolving systems accumulate \emph{technical debt}~\cite{brown2010managing}, increasing maintenance costs and reducing reliability. Addressing these challenges requires innovative approaches capable of handling large-scale unstructured data to provide actionable insights.
+
+
+
+\subsection{Survey Methodology and Empirical Studies}
+
+Empirical studies in software engineering~\cite{perry2000empirical} are crucial for understanding how software evolves and how development practices affect system reliability, performance, and maintainability. Traditional surveys rely on structured questionnaires or interviews but are limited by scale and biases such as subjective recall or incomplete responses. In contrast, the \textit{Code-Survey} methodology automates data collection using LLMs to extract structured insights from unstructured data like commit histories and mailing lists. This approach enables large-scale analysis and allows us to answer questions that traditional methods cannot.
+
+\input{method}
+
+\input{case-study}
+\input{limit-futurework}
+
+\section{Conclusion}
+
+This paper introduced \emph{Code-Survey}, the first methodology that leverages LLMs for systematically exploring and analyzing large-scale codebase through a survey-based approach. Applied to the Linux eBPF subsystem, \emph{Code-Survey} successfully uncovered patterns in feature evolution and design that traditional methods overlook. Despite some limitations, our approach provides a valuable framework for understanding the growth of real-world software systems. Future work will expand its scope, enhance LLM capabilities, and apply \emph{Code-Survey} to other large-scale codebases. We also invite collaborators to work together on the ongoing development and refinement of this pioneering methodology.
+
+% In this paper, we introduce \emph{Code-survey}, a novel approach that leverages LLMs to systematically transform unstructured data into structured datasets for analysis. By focusing on commit histories and developer communications, Code-survey enables us to answer questions that were previously impossible to tackle using only unstructured data in large real-world systems. Structured data analysis allows us to explore questions like:
+
+% \begin{itemize}
+%     \item \textbf{Design Rationale and Decision-Making:}
+%     \begin{itemize}
+%         \item What were the primary motivations behind introducing specific eBPF features or bug fixes?
+%         \item How do design rationales discussed in developer communications correlate with implementation choices in commits?
+%         \item What trade-offs have been considered in the design of eBPF features, such as flexibility vs. performance?
+%     \end{itemize}
+    
+%     \item \textbf{Feature Evolution and Integration:}
+%     \begin{itemize}
+%         \item How has the functionality of a specific eBPF feature, like \texttt{bpf\_link}, evolved over successive commits?
+%         \item What dependencies have emerged between eBPF features and other subsystems within the Linux kernel?
+%         \item How do new feature introductions impact the stability and performance of existing eBPF features?
+%     \end{itemize}
+    
+%     \item \textbf{Development Patterns and Trends:}
+%     \begin{itemize}
+%         \item What patterns can be observed in the frequency and nature of commits related to specific eBPF features over time?
+%         \item Are there identifiable phases in the lifecycle of eBPF features, such as initial development, stabilization, and optimization?
+%         \item How do periods of high commit activity correlate with major kernel releases or external events?
+%     \end{itemize}
+    
+%     \item \textbf{Collaborative Dynamics and Communication:}
+%     \begin{itemize}
+%         \item How do discussions in mailing lists influence the direction and prioritization of eBPF feature development?
+%         \item What roles do key maintainers play in shaping the evolution of the eBPF subsystem?
+%         \item How does the collaboration between different contributors affect the consistency and coherence of eBPF feature implementations?
+%     \end{itemize}
+    
+%     \item \textbf{Impact Assessment and Maintenance:}
+%     \begin{itemize}
+%         \item What are the common causes of feature regressions in eBPF, and how are they addressed in subsequent commits?
+%         \item How do maintainers assess the long-term maintenance needs of eBPF features based on commit history and developer feedback?
+%         \item What metrics can be derived from structured data to evaluate the reliability and performance improvements of eBPF features?
+%     \end{itemize}
+    
+%     \item \textbf{Adoption and Usage Insights:}
+%     \begin{itemize}
+%         \item How has the adoption of eBPF features like \texttt{bpf\_link} grown within the Linux kernel, and what factors have driven this adoption?
+%         \item What usage patterns emerge from the commit history that indicate how end-users interact with specific eBPF features?
+%         \item How do enhancements to eBPF influence its applicability in emerging domains such as cloud-native environments and security monitoring?
+%     \end{itemize}
+    
+%     \item \textbf{Knowledge Transfer and Documentation:}
+%     \begin{itemize}
+%         \item How effectively do commit messages and mailing list discussions convey the necessary information for future maintenance and development?
+%         \item What gaps exist between developer communications and the actual codebase, and how can structured data help bridge these gaps?
+%         \item How does the clarity and detail of commit messages impact the ease of understanding feature evolution for new contributors?
+%     \end{itemize}
+    
+%     \item \textbf{Comparative Analysis Across Subsystems:}
+%     \begin{itemize}
+%         \item How does the evolution of eBPF compare to other subsystems within the Linux kernel in terms of complexity and development pace?
+%         \item What lessons can be learned from the development history of eBPF that can be applied to improving other kernel subsystems?
+%         \item Are there common factors that contribute to the successful integration and maintenance of features across different kernel subsystems?
+%     \end{itemize}
+    
+%     \item \textbf{Technical Design and Implementation Components:}
+%     \begin{itemize}
+%         \item How do logical design principles of eBPF translate into specific implementation components within the kernel?
+%         \item What are the key implementation challenges faced during the development of eBPF, and how were they overcome?
+%         \item How have optimizations in eBPF’s implementation impacted its overall performance and efficiency?
+%         \item How does the implementation of eBPF ensure compatibility and interoperability with other kernel subsystems?
+%         \item What role do helper functions play in the implementation of eBPF features, and how have they evolved over time?
+%         \item How does the implementation of the eBPF verifier contribute to the security and reliability of eBPF programs?
+%     \end{itemize}
+    
+%     \item \textbf{Logic Design and Real Components:}
+%     \begin{itemize}
+%         \item How does the logical design of eBPF programs influence their implementation within the Linux kernel?
+%         \item What are the possible logical components and their corresponding implementation components in eBPF?
+%         \item How do design criteria of the eBPF verifier affect the implementation of eBPF helper functions?
+%         \item How have the interactions between eBPF’s logical components and other kernel subsystems been managed in the implementation?
+%         \item How do logical design changes in eBPF correlate with implementation modifications in the kernel codebase?
+%     \end{itemize}
+    
+%     \item \textbf{Deep Insight Questions for Design and Implementation Gap:}
+%     \begin{itemize}
+%         \item How do logical abstractions in eBPF design ensure seamless integration with kernel-level operations?
+%         \item What are the key design principles that guided the implementation of persistent eBPF program attachments like \texttt{bpf\_link}?
+%         \item How has the design of eBPF’s execution environment influenced its implementation efficiency and security?
+%         \item
+
+
+
+% In this paper, we introduce \emph{Code-survey}, a novel approach that leverages LLMs to systematically transform unstructured data into structured datasets for analysis. By focusing on commit histories and developer communications, Code-survey enables us to answer questions that were previously impossible to tackle using only unstructured data in large real-world systems. Structured data analysis allows us to explore questions like:
+
+
+
+
+
+ 
+
+% We make several interesting observations: 
+
+% - Call attention to under-explored areas of the eBPF tool chain, runtime to support the various use cases. 
+
+% - Highlight interesting research directions. 
+
+% We also deployed a open-source pipeline and database for real time open-source eBPF community, which can help you check and analysis quantatively, and can be easily applied to other Linux subsystems.											 
+
+ 
+
+% ## the challendges of Analysis Linux Community: 
+
+ 
+
+% Too much data in one of the largest community of the world 
+
+% Unstruct data, including reviews, patchs, annoounces, discussions all together 
+
+% Self host on mail without platforms like github 
+
+ 
+
+% It’s hard to use traditional NLP mothod or data metrics to analysis them. Doing survey with kernel experts need a huge amond of money and 
+
+ 
+
+% ## Methods 
+
+ 
+
+ 
+
+% Kernel or eBPF Experts give a Survey and Questionnaire 
+
+% Collect meta data of commits and mails with traditional method, including timestamps, mail, thread logic information 
+
+% Connect the data 
+
+ 
+
+% Allow llm to answer the Survey and Questionnaire based on the mails and patches,  
+
+% ## Validate the results with kernel experts 
+
+% Talk to them and collect feed backs. Also evalute the performance of the system. 
+
+% eBPF the goal is to create innovation. The eBPF is continue envlove and no standard. 
+
+% - Tools and verifier need to be portable
+% - 
+
+
+\bibliographystyle{plain}
+\bibliography{cite}
+\end{document}
