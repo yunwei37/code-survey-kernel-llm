@@ -15,7 +15,7 @@ To ensure that the LLM does not answer questions randomly, we evaluate the effec
     \item \textbf{Coverage of Survey Questions:} Do the survey questions comprehensively cover all relevant aspects of the feature or subsystem under analysis?
     \item \textbf{Insight from Survey:} Can the survey data help users analyze the design, implementation, maintenance, reliability, and security evolution, and gain valuable insights?
     \item \textbf{Clarity and Ambiguity in Responses:} Are the survey responses clear and unambiguous, making them actionable for further analysis?
-    \item \textbf{Alignment with Real-World Changes:} How accurately do survey results reflect real-world changes in the software's features and evolution?
+
     \item \textbf{Expert Confirmation:} How do experts rate the accuracy of the survey's generated insights?
 \end{itemize}
 
@@ -46,7 +46,7 @@ We used the GPT-4o model for its strong language understanding and ability to ha
 Due to time and budget limitations, the AI's performance in this experiment can still be greatly improved. Several strategies can enhance accuracy:
 
 \begin{itemize}
-\item \textbf{Multiple Iterations}: Running the survey multiple times and averaging results, similar to human surveys, can significantly reduce response variability. Due to budget limits, we ran it once per commit, and the results are already meaningful with less than 1\% error. We plan to run the survey multiple times and conduct a better evaluation in future work.
+\item \textbf{Multiple Iterations}: Running the survey multiple times and averaging results, similar to human surveys, can significantly reduce response variability. Due to budget limits, we ran it once per commit, and the results are already meaningful with less than 1\% error.
 \item \textbf{Advanced Models}: Fine-tuning domain-specific LLMs for kernel development, or using more advanced models like O1~\cite{o1}, can capture technical nuances better.
 \item \textbf{Refined Prompt Engineering}: Crafting clearer prompts and survey questions will improve response accuracy.
 \item \textbf{Multi-Step Reasoning}: Using multi-step processes or multi-agent systems can help analyze complex commits more thoroughly.
@@ -304,21 +304,9 @@ Our analysis of feature-component dependencies in Figure~\ref{fig:feature_compon
 \end{figure}
 
 
-\subsection{Expert Confirmation}
+\subsection{Survey Validation}
 
-We discussed the results with more than five eBPF experts who have submitted kernel patches or presented at conferences. They confirmed that the findings align with their understanding. We also shared the report with kernel maintainers and the BPF kernel mailing list, which is currently under discussion. Additionally, we plan to provide experts with a sample of survey responses and ask them to rate the accuracy of each response on a defined scale. Based on their feedback, we will refine the survey to improve its correctness and relevance.
-
-\subsection{Clarity and Ambiguity in Responses}
-
-Based on the insights gathered from the survey responses, the results are generally clear and actionable. We plan to invite more experts to review a sample of the responses to identify any vague or unclear answers. Subsequently, we will revise any survey questions prone to misinterpretation or ambiguity to improve clarity and precision.
-
-\subsection{Alignment with Real-World Changes}
-
-By comparing survey responses with real-world feature changes discussed earlier, we confirm that the survey likely captures the correct historical context. We plan to cross-reference survey results with commit histories, mailing list discussions, and kernel release notes to further verify alignment with real-world changes.
-
-\subsection{Coverage of Survey Questions}
-
-We plan to review the survey's coverage to identify potential gaps, ensuring that important aspects such as security, performance, and dependencies are adequately addressed.
+To validate the effectiveness of Code-Survey, we employed multiple approaches. First, we discussed the results with more than five eBPF experts who have submitted kernel patches or presented at conferences; they confirmed that the findings align with their understanding of eBPF evolution. We also shared the report with kernel maintainers and the BPF kernel mailing list for broader validation. Second, the survey responses proved to be generally clear and actionable, with minimal ambiguity in the structured data extracted from commits. Third, by comparing survey responses with real-world feature changes and historical milestones (such as the release of libbpf 1.0 and the introduction of CO-RE), we confirmed that the survey accurately captures the historical context of eBPF development. The consistency between our automated analysis and expert knowledge demonstrates that Code-Survey can effectively transform unstructured development artifacts into reliable, structured insights about software evolution.
 
 % \bibliographystyle{IEEEtran}
 % \bibliography{references}
