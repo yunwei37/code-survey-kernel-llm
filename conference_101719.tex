@@ -34,37 +34,38 @@
 % \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     % T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
-\author{Yusheng Zheng}
-\affiliation{%
-  \institution{Eunomia. Inc.}
-  \country{USA}
-}
-\email{yunwei356@gmail.com}
-\author{Yiwei Yang}
-\affiliation{%
-  \institution{UC Santa Cruz}
-  \country{USA}
-}
-\email{yyang363@ucsc.edu}
-
-\author{Haoqin Tu}
-\affiliation{%
-  \institution{UC Santa Cruz}
-  \country{USA}
-}
-\email{tuisaac163@gmail.com}
-
-\author{Yuxi Huang}
-\affiliation{% 
-  \institution{Eunomia. Inc.}
-  \country{USA}
-}
-\email{yuxi4096@gmail.com}
+% Author information removed for double-blind review
+% \author{Yusheng Zheng}
+% \affiliation{%
+%   \institution{Eunomia. Inc.}
+%   \country{USA}
+% }
+% \email{yunwei356@gmail.com}
+% \author{Yiwei Yang}
+% \affiliation{%
+%   \institution{UC Santa Cruz}
+%   \country{USA}
+% }
+% \email{yyang363@ucsc.edu}
+% 
+% \author{Haoqin Tu}
+% \affiliation{%
+%   \institution{UC Santa Cruz}
+%   \country{USA}
+% }
+% \email{tuisaac163@gmail.com}
+% 
+% \author{Yuxi Huang}
+% \affiliation{% 
+%   \institution{Eunomia. Inc.}
+%   \country{USA}
+% }
+% \email{yuxi4096@gmail.com}
 
 % \title{Do we really know how the system works? Automatic agent system for code behavior analysis}
 \title{Code-Survey: An LLM-Driven Methodology for Analyzing Large-Scale Codebases}
 
-\newcommand{\hq}[1]{\textcolor{blue}{[Haoqin: #1]}}
+% \newcommand{\hq}[1]{\textcolor{blue}{[Haoqin: #1]}} % Commented for anonymity
 
 \begin{document}
 
@@ -90,7 +91,7 @@
 
 Modern software systems like the Linux kernel are among the world's largest and most intricate codebases, continually evolving with new features and increasing complexity. Understanding these systems poses significant challenges due to their scale and the unstructured nature of development artifacts such as commits and mailing list discussions. We introduce Code-Survey, the first LLM-driven methodology designed to systematically explore and analyze large-scale codebases. The central principle behind Code-Survey is to treat LLMs as human participants, acknowledging that software development is also a social activity and thereby enabling the application of established social science techniques. By carefully designing surveys, Code-Survey transforms unstructured data—such as commits, emails—into organized, structured, and analyzable datasets. This enables quantitative analysis of complex software evolution and uncovers valuable insights related to design, implementation, maintenance, reliability, and security.
 
-To demonstrate the effectiveness of Code-Survey, we apply it to the Linux kernel's eBPF subsystem. We construct the Linux-bpf dataset, comprising over 670 features and 16,000 commits from the Linux community. Our quantitative analysis uncovers important insights into the evolution of eBPF, such as development patterns, feature interdependencies, and areas requiring attention for reliability and security—insights that have been initially validated by eBPF experts. Furthermore, Code-Survey can be directly applied to other subsystems within Linux and to other large-scale software projects. By providing a versatile tool for systematic analysis, Code-Survey facilitates a deeper understanding of complex software systems, enabling improvements across a variety of domains and supporting a wide range of empirical studies. The code and dataset is open-sourced in https://github.com/eunomia-bpf/code-survey
+To demonstrate the effectiveness of Code-Survey, we apply it to the Linux kernel's eBPF subsystem. We construct the Linux-bpf dataset, comprising over 670 features and 16,000 commits from the Linux community. Our quantitative analysis uncovers important insights into the evolution of eBPF, such as development patterns, feature interdependencies, and areas requiring attention for reliability and security—insights that have been initially validated by eBPF experts. Furthermore, Code-Survey can be directly applied to other subsystems within Linux and to other large-scale software projects. By providing a versatile tool for systematic analysis, Code-Survey facilitates a deeper understanding of complex software systems, enabling improvements across a variety of domains and supporting a wide range of empirical studies. The code and dataset will be made available upon acceptance.
 \end{abstract}
 
 % \begin{abstract}
@@ -145,7 +146,7 @@ The key contributions of this paper are as follows:
     \item We identify and highlight under-explored areas of eBPF to support various use cases with the help of \emph{Code-survey}, pointing out interesting research directions.
 \end{itemize}
 
-The remainder of this paper is structured as follows. We review background in Section~\ref{sec:related}, followed by a detailed explanation of the Code-survey methodology in Section~\ref{sec:methodology}. Section~\ref{sec:analysis} presents our analysis of the Linux-bpf dataset and the insights gained from it. Sections~\ref{sec:limitations} and~\ref{sec:future} conclude with a discussion of current limitations and future work. All artifacts are open-sourced at \url{https://github.com/eunomia-bpf/code-survey}.
+The remainder of this paper is structured as follows. We review background in Section~\ref{sec:related}, followed by a detailed explanation of the Code-survey methodology in Section~\ref{sec:methodology}. Section~\ref{sec:analysis} presents our analysis of the Linux-bpf dataset and the insights gained from it. Sections~\ref{sec:limitations} and~\ref{sec:future} conclude with a discussion of current limitations and future work. All artifacts will be made available upon acceptance.
 
 \section{Background}
 \label{sec:related}
