@@ -29,28 +29,13 @@ To efficiently process and analyze the vast number of commits in the Linux eBPF 
 
 \subsubsection{Commit Survey Methodology}
 
-Our approach uses an AI model to analyze each commit's details and answer the survey questions. The process includes:
-
-\begin{enumerate} 
-\item \textbf{Data Extraction}: We gather key commit details such as commit ID, author information, commit date, message, code changes, and associated emails.
-\item \textbf{Prompt Construction}: A prompt containing the survey title, description, changed files, and commit details is generated to guide the AI.
-\item \textbf{AI Model Interaction}: The AI processes the prompt, analyzing the commit message and code changes to respond to the survey. For each commit, the AI receives the commit details and survey questions, completes them, and generates structured output as JSON.
-\item \textbf{Feedback Loop}: If the AI's response is incomplete or inconsistent, it re-evaluates and revises the answers to improve accuracy.
-\item \textbf{Data Aggregation}: The AI's responses are stored for later quantitative analysis.
-\end{enumerate}
+Our approach uses an AI model to analyze each commit's details and answer the survey questions. The process begins with data extraction, where we gather key commit details such as commit ID, author information, commit date, message, code changes, and associated emails. Next, we construct prompts containing the survey title, description, changed files, and commit details to guide the AI. The AI then processes these prompts, analyzing the commit message and code changes to respond to the survey. For each commit, the AI receives the commit details and survey questions, completes them, and generates structured output as JSON. If the AI's response is incomplete or inconsistent, it re-evaluates and revises the answers through a feedback loop to improve accuracy. Finally, the AI's responses are stored for later quantitative analysis.
 
 We used the GPT-4o model for its strong language understanding and ability to handle technical content, making it well-suited for analyzing kernel commits.
 
 \subsubsection{Enhancing Survey Accuracy}
 
-Due to time and budget limitations, the AI's performance in this experiment can still be greatly improved. Several strategies can enhance accuracy:
-
-\begin{itemize}
-\item \textbf{Multiple Iterations}: Running the survey multiple times and averaging results, similar to human surveys, can significantly reduce response variability. Due to budget limits, we ran it once per commit, and the results are already meaningful with less than 1\% error.
-\item \textbf{Advanced Models}: Fine-tuning domain-specific LLMs for kernel development, or using more advanced models like O1~\cite{o1}, can capture technical nuances better.
-\item \textbf{Refined Prompt Engineering}: Crafting clearer prompts and survey questions will improve response accuracy.
-\item \textbf{Multi-Step Reasoning}: Using multi-step processes or multi-agent systems can help analyze complex commits more thoroughly.
-\end{itemize}
+Due to time and budget limitations, the AI's performance in this experiment can still be greatly improved. Several strategies can enhance accuracy. Running the survey multiple times and averaging results, similar to human surveys, can significantly reduce response variability. Due to budget limits, we ran it once per commit, and the results are already meaningful with less than 1\% error. Additionally, fine-tuning domain-specific LLMs for kernel development, or using more advanced models like O1~\cite{o1}, can capture technical nuances better. Crafting clearer prompts and survey questions will also improve response accuracy. Furthermore, using multi-step processes or multi-agent systems can help analyze complex commits more thoroughly.
 
 Automating the survey with LLMs enabled us to efficiently process tens of thousands of commits, transforming unstructured data into structured insights.
 
@@ -71,64 +56,19 @@ The dataset contains the following fields:
     \item \textbf{Use Cases}: Related subsystems and modules.
 \end{itemize}
 
-% References
-% \bibliographystyle{IEEEtran}
-% \bibliography{references}
+\subsubsection{Key Findings from Dataset Analysis}
 
-\paragraph{Commit Classification Distribution}
+Our analysis of the commit dataset reveals several important patterns in the eBPF subsystem development:
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\linewidth]{feature-analysis/commit_pie_chart_commit_classification.png}
-    \caption{Commit Classification Distribution}
-    \label{fig:commit_pie_chart_commit_classification}
-\end{figure}
+\textbf{Commit Classification:} Most commits focus on bug fixes and code cleanups, reflecting ongoing efforts to maintain code quality. Significant attention is also given to testing infrastructure changes, emphasizing the importance of robustness. New features constitute a considerable portion of the commits, while merge commits are commonplace in the Linux kernel's development process.
 
-Most commits focus on bug fixes and code cleanups, reflecting ongoing efforts to maintain code quality. Significant attention is also given to testing infrastructure changes, emphasizing the importance of robustness. New features constitute a considerable portion of the commits, while merge commits are commonplace in the Linux kernel's development process.
+\textbf{Commit Complexity:} The majority of commits are simple, involving small changes, while more complex changes constitute a smaller but noteworthy portion. This distribution suggests that eBPF development follows an incremental improvement pattern.
 
-\paragraph{Commit Complexity Distribution}
+\textbf{Implementation Components:} Test cases and build scripts are significantly affected, highlighting continuous improvements in testing and build processes. The \texttt{libbpf} library is also a key component in the kernel eBPF toolchain, receiving considerable development attention. Additionally, substantial development occurs in other kernel subsystems, particularly related to eBPF events. The frequent updates to the eBPF verifier and helpers indicate ongoing efforts to enhance functionality and ensure program safety. Notably, some commits appear unrelated to the eBPF subsystem.
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\linewidth]{feature-analysis/commit_pie_chart_commit_complexity.png}
-    \caption{Commit Complexity Distribution}
-    \label{fig:commit_pie_chart_commit_complexity}
-\end{figure}
+\textbf{Logic Components:} General utilities, such as tools and scripts, receive the most updates, followed by runtime features like helpers and kernel functions, which are consistently enhanced. eBPF event logic and instruction handling are also frequently updated to ensure robustness and functionality.
 
-The majority of commits are simple, involving small changes, while more complex changes constitute a smaller but noteworthy portion.
-
-\paragraph{Major Related Implementation Components}
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\linewidth]{feature-analysis/commit_pie_chart_major_implementation_component.png}
-    \caption{Major Related Implementation Components}
-    \label{fig:commit_pie_chart_major_implementation_component}
-\end{figure}
-
-Test cases and build scripts are significantly affected, highlighting continuous improvements in testing and build processes. The \texttt{libbpf} library is also a key component in the kernel eBPF toolchain, receiving considerable development attention. Additionally, substantial development occurs in other kernel subsystems, particularly related to eBPF events. The frequent updates to the eBPF verifier and helpers indicate ongoing efforts to enhance functionality and ensure program safety. Notably, some commits appear unrelated to the eBPF subsystem.
-
-\paragraph{Logic Components Affected}
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\linewidth]{feature-analysis/commit_pie_chart_major_logic_component.png}
-    \caption{Major Related Logic Components}
-    \label{fig:commit_pie_chart_major_logic_component}
-\end{figure}
-
-General utilities, such as tools and scripts, receive the most updates, followed by runtime features like helpers and kernel functions, which are consistently enhanced. eBPF event logic and instruction handling are also frequently updated to ensure robustness and functionality.
-
-\paragraph{Use Cases and eBPF Events}
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\linewidth]{feature-analysis/commit_pie_chart_usecases_or_submodule_events.png}
-    \caption{Related Events and Use Cases}
-    \label{fig:commit_pie_chart_usecases_or_submodule_events}
-\end{figure}
-
-While most commits enhance the core eBPF infrastructure—including the verifier and runtime components—significant development also extends to networking-related features such as socket and XDP programs, which receive substantial attention. Additionally, tracing tools like tracepoints and kprobes highlight eBPF's crucial role in system diagnostics and debugging.
+\textbf{Use Cases and Events:} While most commits enhance the core eBPF infrastructure—including the verifier and runtime components—significant development also extends to networking-related features such as socket and XDP programs, which receive substantial attention. Additionally, tracing tools like tracepoints and kprobes highlight eBPF's crucial role in system diagnostics and debugging.
 
 \subsection{Correctness of Survey Responses}
 
