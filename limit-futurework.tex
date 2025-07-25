@@ -6,25 +6,7 @@ While \emph{Code-Survey} offers significant advancements in analyzing the evolut
 \section{Future Work}
 \label{sec:future}
 
-While \emph{Code-Survey} demonstrates significant potential in organizing and analyzing unstructured software data, several areas warrant further exploration and improvement:
-
-\subsection{Enhanced Evaluation of LLM-Generated Survey Data}
-
-To address challenges such as hallucinations and inaccuracies in LLM outputs, future work will focus on developing robust validation frameworks. This includes benchmarking results against curated datasets and involving human experts in refining LLM outputs. Enhancing the reliability of the structured data will improve the overall effectiveness of \emph{Code-Survey}.
-
-\subsection{Performance Optimization with Advanced LLMs}
-
-The current proof-of-concept showcases automation but with room for performance improvements if no human feedback is procided. Future efforts will explore the use of more advanced models, such as O1~\cite{o1}, and the implementation of multi-agent systems to optimize performance and accuracy. Ensuring compatibility with machine analysis tools is crucial for seamless integration into existing workflows.
-
-\subsection{Application to Other Software Projects}
-
-While \emph{Code-Survey} has been applied to the Linux eBPF subsystem, its methodology can be directly applied to other projects like Kubernetes, LLVM, and Apache. Expanding to these repositories will test its scalability and versatility, potentially requiring adjustments to accommodate different development practices and environments.
-
-\subsection{Incorporation of Additional Data Sources like Code, Trace, and Execution Flow}
-
-Due to the time limited, the case study currently mainly focus on analyzing the commit and features. Extending \emph{Code-Survey} to incorporate a wider range of data sources—such as source code, execution traces, and execution flows—will provide a more comprehensive understanding of software systems. Direct structuring of code and functions, transforming technical elements into structured, query-able data or graphs with attributes, will enable advanced analyses. This approach will facilitate a deeper exploration of software implementations, performance characteristics, and evolutionary patterns.
-
-By pursuing these enhancements, \emph{Code-Survey} aims to become a comprehensive tool for analyzing complex software systems, benefiting both developers and researchers in the field of software engineering.
+While \emph{Code-Survey} demonstrates significant potential in organizing and analyzing unstructured software data, several areas warrant further exploration. First, to address challenges such as hallucinations and inaccuracies in LLM outputs, future work will focus on developing robust validation frameworks including benchmarking results against curated datasets and involving human experts in refining LLM outputs. Second, the current proof-of-concept showcases automation but with room for performance improvements when no human feedback is provided; future efforts will explore the use of more advanced models such as O1~\cite{o1} and the implementation of multi-agent systems to optimize performance and accuracy while ensuring compatibility with machine analysis tools. Third, while \emph{Code-Survey} has been applied to the Linux eBPF subsystem, its methodology can be directly applied to other projects like Kubernetes, LLVM, and Apache, which will test its scalability and versatility. Finally, due to time constraints, the case study currently focuses mainly on analyzing commits and features; extending \emph{Code-Survey} to incorporate additional data sources—such as source code, execution traces, and execution flows—will provide a more comprehensive understanding of software systems through direct structuring of code and functions into queryable data or graphs with attributes. By pursuing these enhancements, \emph{Code-Survey} aims to become a comprehensive tool for analyzing complex software systems, benefiting both developers and researchers in software engineering.
 
 % \bibliographystyle{IEEEtran}
 % \bibliography{references}
