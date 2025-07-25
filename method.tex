@@ -43,3 +43,7 @@ A key aspect of \emph{Code-Survey} is designing effective surveys to generate ac
 \end{enumerate}
 
 This workflow ensures that the LLM-driven survey design process leads to structured data that offers deeper insights into complex software systems, such as the Linux kernel. By guiding LLM agents through these steps, we can systematically extract valuable information from unstructured data sources.
+
+\subsection{Best Practices}
+
+To ensure reliable results when applying Code-Survey, several best practices should be followed. First, use predefined tags and categories in survey questions to minimize LLM hallucinations and standardize responses. Second, implement iterative LLM workflows with feedback loops and techniques like ReAct~\cite{yao2022react}, allowing models to refine their answers for improved accuracy. Third, include "I'm Not Sure" options to prevent misleading answers when the LLM encounters unfamiliar content. Fourth, conduct pilot testing to identify issues with question clarity before full deployment. Finally, design questions for consistency and perform validation checks to filter out contradictory responses. These practices help mitigate the risks of LLM limitations while maximizing the reliability of the structured data extracted from software development artifacts.
