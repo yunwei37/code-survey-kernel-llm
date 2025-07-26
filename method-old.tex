@@ -1,0 +1,87 @@
+% \section{\emph{\sys} Methodology}
+\section{\sys Design}
+\label{sec:design}
+
+% This section outlines the \emph{\sys} methodology, which integrates the expertise of human participants and the efficiency of Large Language Model (LLM) agents to convert unstructured software data—such as commit histories and mailing lists—into structured datasets suitable for analysis.
+This section presents \sys, a multi-agent framework that creates a virtual Linux community to analyze kernel development. \sys employs specialized LLM agents representing different stakeholder perspectives (maintainers, contributors, security experts) to convert unstructured data into multi-perspective structured datasets, addressing collaboration evolution in the FM era.
+
+% The central principle behind \emph{\sys} is to treat LLMs as human participants in a survey-like process. While LLMs can process data more quickly and at lower costs than humans, they are also prone to errors, guesses, and limitations in specific domains, much like human participants~\cite{ji2023survey}. By leveraging traditional survey methodologies designed for humans, we can efficiently conduct LLM-based surveys while maintaining oversight and validation from human experts. Additionally, LLM agents can utilize traditional tools to automate analysis tasks.
+The central principle behind \sys is to model the Linux kernel community through specialized agents that embody different stakeholder perspectives. Each agent processes kernel artifacts through their unique lens~\cite{ji2023survey}, revealing how stakeholders interpret changes differently. Agent consensus mechanisms and debate protocols help understand not just what changed, but how the community perceives changes, bridging legacy code and future AIware systems.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.5\textwidth]{workflow.pdf}
+    \caption{\sys Multi-Agent Workflow}
+    \label{fig:workflow}
+\end{figure}
+
+\subsection{Workflow}
+
+% The \emph{\sys} process follows a structured workflow, as illustrated in Figure~\ref{fig:workflow}:
+\sys follows a structured workflow (Figure~\ref{fig:workflow}) where agents collaborate to analyze kernel artifacts:
+
+% \begin{enumerate}
+%     \item \textbf{Survey Design by Human Experts or LLM Agents}: Experts or LLM agents create tailored questions for each type of unstructured data (e.g., commits, emails) to extract key insights. The survey design is crucial for guiding the LLM in structuring the data effectively and focuses on tasks aligned with the LLM's strengths, such as summarization and yes/no questions. This step should minimizes the usage of open-ended questions that require deep domain expertise.
+% 
+%     \item \textbf{Survey Completion by LLM Agents}: LLM agents process the unstructured input by answering the survey questions. They organize data into structured formats by tagging relevant information, summarizing key points, and identifying important patterns. This step is fundamental in transforming unstructured data into structured datasets, enabling more straightforward analysis.
+% 
+%     \item \textbf{Evaluation of Survey Results by Human Experts or LLM Agents}: Human experts with domain-specific knowledge, or additional LLM agents, evaluate a sample of the structured data. This evaluation ensures accuracy and allows for the detection of discrepancies. If the results are unsatisfactory, the process loops back to Step 1, where the survey design is refined.
+% 
+%     \item \textbf{Data Processing and Quantitative Analysis}: The structured data undergoes further processing to analyze key metrics and patterns. Quantitative analysis is performed to identify trends in development, feature interdependencies, and areas needing improvement in reliability and security. This provides a detailed view of the system's evolution and characteristics.
+% 
+% \end{enumerate}
+\begin{enumerate}
+    \item \textbf{Survey Design}: A Survey-Designer agent creates tailored questions capturing multiple perspectives (stability, features, security) while minimizing bias.
+
+    \item \textbf{Multi-Agent Analysis}: Community Proxy Agents independently analyze artifacts—Maintainer (stability/APIs), Contributor (features), Security Expert (vulnerabilities)—each answering from their perspective.
+
+    \item \textbf{Consensus Building}: An Adjudicator agent performs majority voting, calculates inter-agent agreement (Cohen's kappa), and flags low-consensus items, revealing stakeholder divergences.
+
+    \item \textbf{Legacy Integration}: A Data-Loader agent transforms multi-perspective data into modern formats (SQL, GraphQL), enabling AI tools to query 30+ years of kernel history without codebase modification.
+
+\end{enumerate}
+
+% This process employs an iterative design, allowing surveys to be refined based on analysis results, thereby creating a feedback loop that enhances data structuring and interpretation. By leveraging both LLMs and human oversight, the \emph{\sys} methodology efficiently handles large volumes of unstructured software data. At each step, human experts can interactively contribute, or LLM agents can automate the process.
+Agent disagreements signal areas where real stakeholders have different priorities, revealing collaboration patterns invisible to single models. The framework demonstrates AI-augmented rather than AI-replaced development, with agents as cognitive enhancers providing structured access to legacy code without disruptive rewrites.
+
+\subsection{Multi-Agent Architecture}
+
+The framework creates agent representations of real kernel community members, where each agent represents an actual person who has contributed to or interacted with the eBPF subsystem. For example, a Linus Torvalds agent embodies the kernel creator's perspective on architectural integrity, while an Alexei Starovoitov agent represents the eBPF maintainer's focus on verifier safety and API stability. Similarly, agents for Daniel Borkmann (co-maintainer), Brendan Gregg (observability expert), and KP Singh (security developer) each bring their unique perspectives based on their historical contributions and documented positions. The framework can instantiate agents for any developer with sufficient contribution history, creating a diverse virtual community that mirrors the real kernel ecosystem.
+
+Each agent maintains dual memory systems that mirror how real developers accumulate knowledge. Short-term memory tracks recent commits, active discussions, and current patches under review, capturing the working context of ongoing debates and temporary opinions formed during active development. Long-term memory, accessed via RAG over the agent's complete contribution history, encompasses their full commit record, historical email threads indexed by topic and sentiment, past design decisions with rationales, evolution of coding style, and collaboration patterns with other developers. This memory architecture enables agents to retrieve relevant historical context when analyzing new commits—for instance, when reviewing a verifier change, an agent searches through past verifier bugs, security discussions, and design trade-offs to inform its current analysis, maintaining consistency with the real person's documented positions while allowing natural evolution based on new evidence.
+
+% \subsection{Survey Design with LLM Assistance}
+\subsection{Agent Interaction Protocol}
+
+% A key aspect of \emph{\sys} is designing effective surveys to generate accurate data. Surveys can be designed by humans or LLM agents. We identify three key steps to guide LLM agents in designing surveys. The following prompts serve as a framework or LLM input for survey creation:
+% 
+% \begin{enumerate}
+%     \item \textbf{Design High-Level Insightful Questions}: If you could ask every kernel developer to complete a survey or questionnaire about a commit or an email, what are the most insightful questions related to design, implementation, maintenance, reliability, and security? Describe the possible questions in detail.
+% 
+%     \item \textbf{Identify Required Data Types and Sources}: What data types and sources are required to answer the insightful questions described previously? Describe the data types and sources for each question in detail.
+% 
+%     \item \textbf{Design Survey Questions to Retrieve Data}: What survey questions can you design to obtain the required data types for the insightful questions from the data sources described previously? Describe the survey questions for kernel developers in detail.
+% 
+% \end{enumerate}
+% 
+% This workflow ensures that the LLM-driven survey design process leads to structured data that offers deeper insights into complex software systems, such as the Linux kernel. By guiding LLM agents through these steps, we can systematically extract valuable information from unstructured data sources.
+Agents interact through a protocol mirroring real community dynamics:
+
+\begin{enumerate}
+    \item \textbf{Artifact Distribution}: Orchestrator distributes artifacts to all agents for parallel analysis.
+
+    \item \textbf{Independent Analysis}: Agents analyze through specialized lenses (e.g., Maintainer evaluates compatibility, Security Expert assesses vulnerabilities).
+
+    \item \textbf{Structured Response}: Agents provide consistent responses with classification, rationale, and confidence level.
+
+    \item \textbf{Consensus Mechanism}: Adjudicator uses majority voting and Cohen's kappa; divergences (kappa < 0.4) reveal real community disagreements.
+
+    \item \textbf{Human-in-the-Loop}: Low-consensus items undergo human expert validation.
+
+\end{enumerate}
+
+The protocol reveals FM-era collaboration: agents augment human judgment, with disagreements highlighting genuine community tensions.
+
+% \subsection{Best Practices}
+% 
+% To ensure reliable results when applying \sys, several best practices should be followed. First, use predefined tags and categories in survey questions to minimize LLM hallucinations and standardize responses. Second, implement iterative LLM workflows with feedback loops and techniques like ReAct~\cite{yao2022react}, allowing models to refine their answers for improved accuracy. Third, include "I'm Not Sure" options to prevent misleading answers when the LLM encounters unfamiliar content. Fourth, conduct pilot testing to identify issues with question clarity before full deployment. Finally, design questions for consistency and perform validation checks to filter out contradictory responses. These practices help mitigate the risks of LLM limitations while maximizing the reliability of the structured data extracted from software development artifacts.
