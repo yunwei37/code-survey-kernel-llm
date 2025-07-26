@@ -7,21 +7,7 @@ This socio-technical approach allows us to transform unstructured artifacts into
 
 \subsection{Design Goals}
 
-The design of \sys is guided by four core principles derived from observing the Linux development process.
-
-\begin{table}[h]
-\centering
-\begin{tabular}{p{1cm}|p{4cm}|p{9cm}}
-\hline
-ID & Requirement & Rationale \& Mapping to Linux Practice \\
-\hline
-\textbf{G-1} & \textbf{Faithful Stakeholder Modeling} & Agents must embody the distinct perspectives of \textbf{real kernel participants}. This mirrors the real-world tension between goals like feature velocity, long-term stability (a maintainer's view), and risk mitigation (a security developer's view). \\
-\textbf{G-2} & \textbf{Question-Driven, Evidence-Based Analytics} & The system must answer high-level natural language questions with quantitative analysis and \textbf{explicit, traceable evidence}. This reflects the kernel community's norm where any claim must be backed by references to specific commits, mailing list threads, or performance data. \\
-\textbf{G-3} & \textbf{Scalable and Economical Operation} & The framework must process millions of artifacts cost-effectively. We implement a \textbf{tiered inference pipeline}, where cheap, heuristic-based agents handle the majority of simple tasks, reserving powerful models for the complex reasoning performed by the core developer agents. This mimics the kernel's use of automated bots to triage issues before they reach human maintainers. \\
-\textbf{G-4} & \textbf{Measurable Reliability and Consensus} & The system must quantify its own internal agreement and reliability. By measuring inter-agent agreement, we build a trust model analogous to the kernel's \texttt{Reviewed-by} and \texttt{Tested-by} tags, ensuring that outputs are the result of a \textbf{consensus between key developer perspectives}. \\
-\hline
-\end{tabular}
-\end{table}
+The design of \sys is guided by four core principles derived from observing the Linux development process. First, \textbf{Faithful Stakeholder Modeling} (G-1) requires that agents embody the distinct perspectives of \textbf{real kernel participants}, mirroring the real-world tension between goals like feature velocity, long-term stability (a maintainer's view), and risk mitigation (a security developer's view). Second, \textbf{Question-Driven, Evidence-Based Analytics} (G-2) mandates that the system answer high-level natural language questions with quantitative analysis and \textbf{explicit, traceable evidence}, reflecting the kernel community's norm where any claim must be backed by references to specific commits, mailing list threads, or performance data. Third, \textbf{Scalable and Economical Operation} (G-3) ensures the framework can process millions of artifacts cost-effectively through a \textbf{tiered inference pipeline}, where cheap, heuristic-based agents handle the majority of simple tasks, reserving powerful models for the complex reasoning performed by the core developer agents—mimicking the kernel's use of automated bots to triage issues before they reach human maintainers. Finally, \textbf{Measurable Reliability and Consensus} (G-4) requires the system to quantify its own internal agreement and reliability by measuring inter-agent agreement, building a trust model analogous to the kernel's \texttt{Reviewed-by} and \texttt{Tested-by} tags, ensuring that outputs are the result of a \textbf{consensus between key developer perspectives}.
 
 
 \subsection{Simulating the Kernel Development Workflow}
@@ -45,28 +31,9 @@ The \sys architecture answers a user's query by simulating the lifecycle of a ch
 
 \subsection{Empirically-Grounded Personas}
 
-The key to \sys's fidelity is its use of Empirically-Grounded Personas. These are agents representing real community members, with each agent's behavior and analytical lens shaped by that person's actual history of contributions.
+Central to \sys's fidelity is the deployment of Empirically-Grounded Personas—computational agents that embody the expertise and perspectives of actual kernel contributors. Each persona's analytical framework is systematically constructed from the developer's historical contributions, enabling the replication of their domain-specific insights and decision-making patterns. This approach operationalizes the tacit knowledge embedded within the community by transforming individual developer histories into structured analytical lenses. Each persona is underpinned by a comprehensive Knowledge Base, implemented as a dedicated vector store for Retrieval-Augmented Generation (RAG), which encompasses: (i) all commits authored by the developer, (ii) their complete mailing list correspondence, (iii) patches formally reviewed (identified through \texttt{Reviewed-by:} tags), and (iv) documented positions from design discussions and technical presentations.
 
-\textbf{Each persona is defined by a unique Knowledge Base}, a personal memory built from that individual's digital footprint. This knowledge base is implemented as a dedicated vector store for Retrieval-Augmented Generation (RAG) and contains:
-
-\begin{itemize}
-\item All \textbf{commits authored} by the developer.
-\item All \textbf{mailing list emails} sent by them.
-\item All patches they have formally reviewed (via \texttt{Reviewed-by:} tags).
-\item Their documented positions in design discussions and talks.
-\end{itemize}
-
-This allows for highly specialized analysis. For example:
-
-\begin{itemize}
-\item An \textbf{Alexei Starovoitov agent} (eBPF maintainer) analyzes a change with a primary focus on verifier safety and API stability, drawing on its memory of thousands of accepted or rejected BPF patches.
-\item A \textbf{Brendan Gregg agent} (observability expert) assesses the same change based on its utility for performance tracing tools, referencing its knowledge base of past \texttt{perf} and \texttt{bpftrace} developments.
-\item A \textbf{KP Singh agent} (security developer) evaluates it from a security perspective, comparing code patterns to its memory of past discussions on Linux Security Modules (LSMs) and BPF hardening.
-\end{itemize}
-
-This method transforms the implicit, individual expertise buried in project history into an explicit, structured format ready for quantitative analysis and deep socio-technical insight.
-
-Of course. Here is the "Illustrative Workflow in Action" section, which details how the \sys framework uses its survey-based, multi-agent process to answer a complex question.
+This architecture enables highly specialized, perspective-driven analysis that mirrors the heterogeneous expertise within the kernel community. For instance, the \textbf{Alexei Starovoitov agent}, representing the eBPF maintainer, evaluates changes through the lens of verifier safety and API stability, leveraging its repository of thousands of accepted and rejected BPF patches. Conversely, the \textbf{Brendan Gregg agent}, embodying observability expertise, assesses the same changes based on their utility for performance tracing tools, drawing upon extensive knowledge of \texttt{perf} and \texttt{bpftrace} evolution. The \textbf{KP Singh agent} applies a security-focused perspective, analyzing code patterns against a corpus of Linux Security Module (LSM) discussions and BPF hardening initiatives. Through this multi-perspective approach, \sys transforms the implicit, distributed expertise buried within decades of project history into an explicit, queryable knowledge representation suitable for systematic socio-technical analysis.
 
 
 \subsection{Illustrative Workflow in Action}
@@ -78,12 +45,7 @@ The framework follows a story-like progression that simulates the community's pr
 \begin{enumerate}
 \item \textbf{Survey Design \& Scoping}: The \textbf{Orchestrator} agent first parses the query. It identifies the core topics (verifier, performance, limits) and the relevant timeframe (post-v5.10). Based on this, it selects a tailored survey schema designed for analyzing architectural changes. This survey includes questions about motivation, technical risk, performance impact, and security implications, capturing multiple stakeholder perspectives. It then retrieves the relevant commits and mailing list discussions for analysis.
 
-\item \textbf{Multi-Agent Analysis}: The artifacts are passed to the \textbf{Persona Crew}. For this query, agents for \textbf{Alexei Starovoitov}, \textbf{Daniel Borkmann}, and \textbf{Brendan Gregg} are activated. Each agent independently analyzes the artifacts and completes the survey from its unique perspective:
-    \begin{itemize}
-    \item The \textbf{Alexei Starovoitov agent}, drawing from its maintainer memory, completes its survey noting the motivation was "refactoring for performance" with a "medium" technical risk.
-    \item The \textbf{Daniel Borkmann agent} concurs on the motivation but assesses the risk as "low," citing its knowledge of the extensive test suite that was developed concurrently.
-    \item The \textbf{Brendan Gregg agent}, focusing on observability, highlights in its survey that the primary "impact" was enabling more powerful tracing tools.
-    \end{itemize}
+\item \textbf{Multi-Agent Analysis}: The artifacts are passed to the \textbf{Persona Crew}. For this query, a set of agents related to the query are activated. Each agent independently analyzes the artifacts and completes the survey from its unique perspective. For example, the \textbf{Alexei Starovoitov agent}, drawing from its maintainer memory, completes its survey noting the motivation was "refactoring for performance" with a "medium" technical risk. The \textbf{Daniel Borkmann agent} concurs on the motivation but assesses the risk as "low," citing its knowledge of the extensive test suite that was developed concurrently. Meanwhile, the \textbf{Brendan Gregg agent}, focusing on observability, highlights in its survey that the primary "impact" was enabling more powerful tracing tools.
 
 \item \textbf{Consensus Building}: The \textbf{Critic-Resolver} agent gathers the completed surveys. It calculates the inter-agent agreement (Cohen's kappa, $\kappa$) and flags a disagreement on the "risk" assessment ("medium" vs. "low"). This triggers a simulated debate where the agents exchange their core evidence. The Alexei agent cites a past verifier bug, while the Daniel agent provides a link to the specific test-suite emails. They reconcile to a final consensus assessment of "low-to-medium risk, mitigated by extensive testing," which is recorded in the final survey data.
 
