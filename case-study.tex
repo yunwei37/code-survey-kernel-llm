@@ -33,7 +33,7 @@ To efficiently process and analyze the vast number of commits in the Linux eBPF 
 
 Following the workflow described in Section~\ref{sec:design}, each agent analyzes commits through their personalized lens: (1) memory retrieval: the agent searches their RAG-indexed Knowledge Base for similar past commits, related discussions, and previous decisions, (2) contextual analysis: combining the new commit with retrieved memories to form opinions consistent with their historical stance, (3) perspective-based classification: the Alexei Starovoitov agent might flag a verifier change as "high-risk" while the Brendan Gregg agent sees it as "enabling new observability", (4) collaborative review: agents debate classifications in Phase 3 (Asynchronous Community Review), with disagreements revealing real community tensions, and (5) consensus building: the Critic-Resolver agent (Phase 4) captures both majority views and dissenting opinions.
 
-The memory-augmented GPT-4o model enables each agent to maintain consistency with their real-world counterpart's documented positions while allowing natural evolution of views based on new evidence.
+The memory-augmented agents maintain consistency with their real-world counterpart's documented positions while allowing natural evolution of views based on new evidence.
 
 \subsubsection{Enhancing Survey Accuracy}
 
