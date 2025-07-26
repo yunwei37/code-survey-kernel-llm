@@ -72,14 +72,3 @@
 **arXiv ID:** 2506.11060  
 **URL:** https://arxiv.org/abs/2506.11060  
 **Notes:** Submitted May 27, 2025. Microsoft Research paper on deep research agent for kernel code. Note: This appears to be the correct paper, though title differs slightly from query.
-
-## 8. Commit Classification into Maintenance Activities Using In-Context Learning
-
-**Status:** Could not find exact paper with this title from 2024.
-
-**Related Papers Found:**
-- "Commit-Level Software Change Intent Classification Using a Pre-Trained Transformer-Based Code Model" (Mathematics 2024, 12(7), 1012; published March 28, 2024)
-- "COLARE: Commit Classification via Fine-grained Context-aware Representation of Code Changes" (IEEE 2024)
-- "An Empirical Study on Commit Message Generation using LLMs via In-Context Learning" (arXiv:2502.18904, 2024)
-
-**Note:** The exact paper title may differ, or it may be a recent publication not yet indexed. The field is actively researching commit classification with ICL techniques in 2024.
