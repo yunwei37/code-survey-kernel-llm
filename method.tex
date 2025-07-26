@@ -1,78 +1,91 @@
 
+\section{\sys: A Multi-Agent Framework for Socio-Technical Analysis}
 
-## **\\sys: A Multi-Agent Framework for Socio-Technical Analysis**
+To systematically analyze the decades of unstructured development history within the Linux kernel, we designed \sys, a multi-agent framework. Its core principle is to create a high-fidelity simulation of the collaborative, role-based social structure of the open-source community itself. Instead of relying on a single monolithic LLM or generic roles, \sys instantiates \textbf{Empirically-Grounded Personas}: agents representing actual key developers. This allows us to capture the nuanced and often competing perspectives that shape the kernel's evolution.
 
-To systematically analyze the decades of unstructured development history within the Linux kernel, we designed `\sys`, a multi-agent framework. Its core principle is to create a high-fidelity simulation of the collaborative, role-based social structure of the open-source community itself. Instead of relying on a single monolithic LLM or generic roles, `\sys` instantiates **Empirically-Grounded Personas**: agents representing actual key developers. This allows us to capture the nuanced and often competing perspectives that shape the kernel's evolution.
+This socio-technical approach allows us to transform unstructured artifacts into structured, analyzable data by capturing not just \emph{what} changed, but the diverse perspectives of the specific individuals who drove those changes.
 
-This socio-technical approach allows us to transform unstructured artifacts into structured, analyzable data by capturing not just *what* changed, but the diverse perspectives of the specific individuals who drove those changes.
+\subsection{Design Goals}
 
-### **Design Goals**
+The design of \sys is guided by four core principles derived from observing the Linux development process.
 
-The design of `\sys` is guided by four core principles derived from observing the Linux development process.
+\begin{table}[h]
+\centering
+\begin{tabular}{p{1cm}|p{4cm}|p{9cm}}
+\hline
+ID & Requirement & Rationale \& Mapping to Linux Practice \\
+\hline
+\textbf{G-1} & \textbf{Faithful Stakeholder Modeling} & Agents must embody the distinct perspectives of \textbf{real kernel participants}. This mirrors the real-world tension between goals like feature velocity, long-term stability (a maintainer's view), and risk mitigation (a security developer's view). \\
+\textbf{G-2} & \textbf{Question-Driven, Evidence-Based Analytics} & The system must answer high-level natural language questions with quantitative analysis and \textbf{explicit, traceable evidence}. This reflects the kernel community's norm where any claim must be backed by references to specific commits, mailing list threads, or performance data. \\
+\textbf{G-3} & \textbf{Scalable and Economical Operation} & The framework must process millions of artifacts cost-effectively. We implement a \textbf{tiered inference pipeline}, where cheap, heuristic-based agents handle the majority of simple tasks, reserving powerful models for the complex reasoning performed by the core developer agents. This mimics the kernel's use of automated bots to triage issues before they reach human maintainers. \\
+\textbf{G-4} & \textbf{Measurable Reliability and Consensus} & The system must quantify its own internal agreement and reliability. By measuring inter-agent agreement, we build a trust model analogous to the kernel's \texttt{Reviewed-by} and \texttt{Tested-by} tags, ensuring that outputs are the result of a \textbf{consensus between key developer perspectives}. \\
+\hline
+\end{tabular}
+\end{table}
 
-| ID | Requirement | Rationale & Mapping to Linux Practice |
-| :-- | :--- | :--- |
-| **G-1** | **Faithful Stakeholder Modeling** | Agents must embody the distinct perspectives of **real kernel participants**. This mirrors the real-world tension between goals like feature velocity, long-term stability (a maintainer's view), and risk mitigation (a security developer's view). |
-| **G-2** | **Question-Driven, Evidence-Based Analytics** | The system must answer high-level natural language questions with quantitative analysis and **explicit, traceable evidence**. This reflects the kernel community's norm where any claim must be backed by references to specific commits, mailing list threads, or performance data. |
-| **G-3** | **Scalable and Economical Operation** | The framework must process millions of artifacts cost-effectively. We implement a **tiered inference pipeline**, where cheap, heuristic-based agents handle the majority of simple tasks, reserving powerful models for the complex reasoning performed by the core developer agents. This mimics the kernel's use of automated bots to triage issues before they reach human maintainers. |
-| **G-4** | **Measurable Reliability and Consensus** | The system must quantify its own internal agreement and reliability. By measuring inter-agent agreement, we build a trust model analogous to the kernel's `Reviewed-by` and `Tested-by` tags, ensuring that outputs are the result of a **consensus between key developer perspectives**. |
 
------
+\subsection{Simulating the Kernel Development Workflow}
 
-### **Simulating the Kernel Development Workflow**
+The \sys architecture answers a user's query by simulating the lifecycle of a change within the Linux kernel community. The process is broken into phases that mirror how a patch moves from submission to integration.
 
-The `\sys` architecture answers a user's query by simulating the lifecycle of a change within the Linux kernel community. The process is broken into phases that mirror how a patch moves from submission to integration.
+\emph{Figure X: The architecture of \sys, which simulates the kernel development workflow to analyze historical artifacts.}
 
-*Figure X: The architecture of \\sys, which simulates the kernel development workflow to analyze historical artifacts.*
+\begin{enumerate}
+\item \textbf{Phase 1: Query Decomposition \& Artifact Retrieval.} The process begins when the \textbf{Orchestrator} agent parses a user's natural language query. It identifies the relevant historical artifacts—a set of commits, patch series, and mailing list threads—that serve as the subject of the analysis. This is analogous to a developer focusing on a specific problem or proposed change.
 
-1.  **Phase 1: Query Decomposition & Artifact Retrieval.** The process begins when the **Orchestrator** agent parses a user's natural language query. It identifies the relevant historical artifacts—a set of commits, patch series, and mailing list threads—that serve as the subject of the analysis. This is analogous to a developer focusing on a specific problem or proposed change.
+\item \textbf{Phase 2: Automated Triage (CI Pipeline Simulation).} The retrieved artifacts are first passed to a \textbf{Triage Crew} of lightweight, heuristic-based agents. This simulates the kernel's automated CI systems and bots. \texttt{SyzbotTwin} flags artifacts related to fuzzer-found bugs, while \texttt{CheckpatchBot} annotates for style or common errors. This phase enriches the artifacts with objective metadata before they undergo expert human review.
 
-2.  **Phase 2: Automated Triage (CI Pipeline Simulation).** The retrieved artifacts are first passed to a **Triage Crew** of lightweight, heuristic-based agents. This simulates the kernel's automated CI systems and bots. `SyzbotTwin` flags artifacts related to fuzzer-found bugs, while `CheckpatchBot` annotates for style or common errors. This phase enriches the artifacts with objective metadata before they undergo expert human review.
+\item \textbf{Phase 3: Asynchronous Community Review (Mailing List Simulation).} This is the core analytical phase, simulating the peer review process on a mailing list. A dynamically assembled \textbf{Persona Crew}, consisting of Empirically-Grounded Personas for relevant developers (e.g., Alexei Starovoitov, Brendan Gregg), analyzes the artifacts in parallel. Each agent assesses the change from its unique perspective, conditioned by its personal knowledge base, and records its findings in a structured \textbf{survey}.
 
-3.  **Phase 3: Asynchronous Community Review (Mailing List Simulation).** This is the core analytical phase, simulating the peer review process on a mailing list. A dynamically assembled **Persona Crew**, consisting of Empirically-Grounded Personas for relevant developers (e.g., Alexei Starovoitov, Brendan Gregg), analyzes the artifacts in parallel. Each agent assesses the change from its unique perspective, conditioned by its personal knowledge base, and records its findings in a structured **survey**.
+\item \textbf{Phase 4: Consensus Building \& Maintainer Decision (Resolution Simulation).} This phase simulates the process of achieving community consensus and receiving a maintainer's final judgment. The \textbf{Critic-Resolver} agent aggregates the surveys from the Persona Crew and calculates an agreement score (e.g., Cohen's Kappa, $\kappa$). If disagreement is high, a "debate" is triggered where agents must argue their positions by citing evidence, mimicking a mailing list discussion. The final, resolved view represents the community consensus, analogous to a maintainer applying a \texttt{Reviewed-by} tag or merging the patch.
 
-4.  **Phase 4: Consensus Building & Maintainer Decision (Resolution Simulation).** This phase simulates the process of achieving community consensus and receiving a maintainer's final judgment. The **Critic-Resolver** agent aggregates the surveys from the Persona Crew and calculates an agreement score (e.g., Cohen's Kappa, $κ$). If disagreement is high, a "debate" is triggered where agents must argue their positions by citing evidence, mimicking a mailing list discussion. The final, resolved view represents the community consensus, analogous to a maintainer applying a `Reviewed-by` tag or merging the patch.
+\item \textbf{Phase 5: Insight Synthesis \& Reporting.} In the final phase, the \textbf{Data-Synthesizer} agent takes the structured, consensus-driven data from the simulation. It performs any required quantitative analysis (e.g., running \texttt{DuckDB} queries), generates charts and tables, and composes a final, human-readable report that answers the user's original query.
+\end{enumerate}
 
-5.  **Phase 5: Insight Synthesis & Reporting.** In the final phase, the **Data-Synthesizer** agent takes the structured, consensus-driven data from the simulation. It performs any required quantitative analysis (e.g., running `DuckDB` queries), generates charts and tables, and composes a final, human-readable report that answers the user's original query.
 
------
+\subsection{Empirically-Grounded Personas}
 
-### **Empirically-Grounded Personas**
+The key to \sys's fidelity is its use of Empirically-Grounded Personas. These are agents representing real community members, with each agent's behavior and analytical lens shaped by that person's actual history of contributions.
 
-The key to `\sys`'s fidelity is its use of Empirically-Grounded Personas. These are agents representing real community members, with each agent's behavior and analytical lens shaped by that person's actual history of contributions.
+\textbf{Each persona is defined by a unique Knowledge Base}, a personal memory built from that individual's digital footprint. This knowledge base is implemented as a dedicated vector store for Retrieval-Augmented Generation (RAG) and contains:
 
-**Each persona is defined by a unique Knowledge Base**, a personal memory built from that individual's digital footprint. This knowledge base is implemented as a dedicated vector store for Retrieval-Augmented Generation (RAG) and contains:
-
-  * All **commits authored** by the developer.
-  * All **mailing list emails** sent by them.
-  * All patches they have formally reviewed (via `Reviewed-by:` tags).
-  * Their documented positions in design discussions and talks.
+\begin{itemize}
+\item All \textbf{commits authored} by the developer.
+\item All \textbf{mailing list emails} sent by them.
+\item All patches they have formally reviewed (via \texttt{Reviewed-by:} tags).
+\item Their documented positions in design discussions and talks.
+\end{itemize}
 
 This allows for highly specialized analysis. For example:
 
-  * An **Alexei Starovoitov agent** (eBPF maintainer) analyzes a change with a primary focus on verifier safety and API stability, drawing on its memory of thousands of accepted or rejected BPF patches.
-  * A **Brendan Gregg agent** (observability expert) assesses the same change based on its utility for performance tracing tools, referencing its knowledge base of past `perf` and `bpftrace` developments.
-  * A **KP Singh agent** (security developer) evaluates it from a security perspective, comparing code patterns to its memory of past discussions on Linux Security Modules (LSMs) and BPF hardening.
+\begin{itemize}
+\item An \textbf{Alexei Starovoitov agent} (eBPF maintainer) analyzes a change with a primary focus on verifier safety and API stability, drawing on its memory of thousands of accepted or rejected BPF patches.
+\item A \textbf{Brendan Gregg agent} (observability expert) assesses the same change based on its utility for performance tracing tools, referencing its knowledge base of past \texttt{perf} and \texttt{bpftrace} developments.
+\item A \textbf{KP Singh agent} (security developer) evaluates it from a security perspective, comparing code patterns to its memory of past discussions on Linux Security Modules (LSMs) and BPF hardening.
+\end{itemize}
 
 This method transforms the implicit, individual expertise buried in project history into an explicit, structured format ready for quantitative analysis and deep socio-technical insight.
 
-Of course. Here is the "Illustrative Workflow in Action" section, which details how the `\sys` framework uses its survey-based, multi-agent process to answer a complex question.
+Of course. Here is the "Illustrative Workflow in Action" section, which details how the \sys framework uses its survey-based, multi-agent process to answer a complex question.
 
-***
 
-### **Illustrative Workflow in Action**
+\subsection{Illustrative Workflow in Action}
 
-To demonstrate the framework's capability, consider how `\sys` would answer the query: **"How did the refactoring of verifier loops after kernel v5.10 affect BPF program size limits?"**
+To demonstrate the framework's capability, consider how \sys would answer the query: \textbf{"How did the refactoring of verifier loops after kernel v5.10 affect BPF program size limits?"}
 
 The framework follows a story-like progression that simulates the community's problem-solving process.
 
-1.  **Survey Design & Scoping**: The **Orchestrator** agent first parses the query. It identifies the core topics (verifier, performance, limits) and the relevant timeframe (post-v5.10). Based on this, it selects a tailored survey schema designed for analyzing architectural changes. This survey includes questions about motivation, technical risk, performance impact, and security implications, capturing multiple stakeholder perspectives. It then retrieves the relevant commits and mailing list discussions for analysis.
+\begin{enumerate}
+\item \textbf{Survey Design \& Scoping}: The \textbf{Orchestrator} agent first parses the query. It identifies the core topics (verifier, performance, limits) and the relevant timeframe (post-v5.10). Based on this, it selects a tailored survey schema designed for analyzing architectural changes. This survey includes questions about motivation, technical risk, performance impact, and security implications, capturing multiple stakeholder perspectives. It then retrieves the relevant commits and mailing list discussions for analysis.
 
-2.  **Multi-Agent Analysis**: The artifacts are passed to the **Persona Crew**. For this query, agents for **Alexei Starovoitov**, **Daniel Borkmann**, and **Brendan Gregg** are activated. Each agent independently analyzes the artifacts and completes the survey from its unique perspective:
-    * The **Alexei Starovoitov agent**, drawing from its maintainer memory, completes its survey noting the motivation was "refactoring for performance" with a "medium" technical risk.
-    * The **Daniel Borkmann agent** concurs on the motivation but assesses the risk as "low," citing its knowledge of the extensive test suite that was developed concurrently.
-    * The **Brendan Gregg agent**, focusing on observability, highlights in its survey that the primary "impact" was enabling more powerful tracing tools.
+\item \textbf{Multi-Agent Analysis}: The artifacts are passed to the \textbf{Persona Crew}. For this query, agents for \textbf{Alexei Starovoitov}, \textbf{Daniel Borkmann}, and \textbf{Brendan Gregg} are activated. Each agent independently analyzes the artifacts and completes the survey from its unique perspective:
+    \begin{itemize}
+    \item The \textbf{Alexei Starovoitov agent}, drawing from its maintainer memory, completes its survey noting the motivation was "refactoring for performance" with a "medium" technical risk.
+    \item The \textbf{Daniel Borkmann agent} concurs on the motivation but assesses the risk as "low," citing its knowledge of the extensive test suite that was developed concurrently.
+    \item The \textbf{Brendan Gregg agent}, focusing on observability, highlights in its survey that the primary "impact" was enabling more powerful tracing tools.
+    \end{itemize}
 
-3.  **Consensus Building**: The **Critic-Resolver** agent gathers the completed surveys. It calculates the inter-agent agreement (Cohen's kappa, $κ$) and flags a disagreement on the "risk" assessment ("medium" vs. "low"). This triggers a simulated debate where the agents exchange their core evidence. The Alexei agent cites a past verifier bug, while the Daniel agent provides a link to the specific test-suite emails. They reconcile to a final consensus assessment of "low-to-medium risk, mitigated by extensive testing," which is recorded in the final survey data.
+\item \textbf{Consensus Building}: The \textbf{Critic-Resolver} agent gathers the completed surveys. It calculates the inter-agent agreement (Cohen's kappa, $\kappa$) and flags a disagreement on the "risk" assessment ("medium" vs. "low"). This triggers a simulated debate where the agents exchange their core evidence. The Alexei agent cites a past verifier bug, while the Daniel agent provides a link to the specific test-suite emails. They reconcile to a final consensus assessment of "low-to-medium risk, mitigated by extensive testing," which is recorded in the final survey data.
 
-4.  **Data Integration & Synthesis**: Finally, the **Data-Synthesizer** agent takes the final, structured survey data. It performs a quantitative query on its dataset to plot the `BPF_MAX_INSNS` constant over different kernel versions, generating a chart that visually confirms the impact on program size limits. This transforms the multi-perspective analysis into a queryable insight, effectively integrating 30+ years of unstructured knowledge. The agent then composes the final answer, weaving together the narrative (the "why" from the surveys) and the quantitative proof (the chart) into a single, evidence-backed report.
+\item \textbf{Data Integration \& Synthesis}: Finally, the \textbf{Data-Synthesizer} agent takes the final, structured survey data. It performs a quantitative query on its dataset to plot the \texttt{BPF\_MAX\_INSNS} constant over different kernel versions, generating a chart that visually confirms the impact on program size limits. This transforms the multi-perspective analysis into a queryable insight, effectively integrating 30+ years of unstructured knowledge. The agent then composes the final answer, weaving together the narrative (the "why" from the surveys) and the quantitative proof (the chart) into a single, evidence-backed report.
+\end{enumerate}
