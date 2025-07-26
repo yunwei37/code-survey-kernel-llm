@@ -1,15 +1,13 @@
 \section{Case Study: eBPF}
 \label{sec:analysis}
 
-% In this section, we apply the \emph{\sys} methodology to analyze the evolution and development of the eBPF subsystem in the Linux kernel. Our goal is to uncover insights into the lifecycle, stability, and design decisions of key eBPF features. The survey results are validated through expert review and both quantitative and qualitative analyses.
-In this section, we apply the \sys framework designed in Section~\ref{sec:design} to analyze the evolution and development of the eBPF subsystem in the Linux kernel. Our goal is to uncover how different stakeholders perceive the lifecycle, stability, and design decisions of key eBPF features. The multi-agent analysis reveals divergent perspectives that mirror real community dynamics, validated through expert review and consensus metrics.
+In this section, we apply the \sys framework to analyze the eBPF subsystem in the Linux kernel, uncovering how different stakeholders perceive feature lifecycle, stability, and design decisions. The multi-agent analysis reveals divergent perspectives that mirror real community dynamics, validated through expert review and consensus metrics.
 
 The Extended Berkeley Packet Filter (eBPF)~\cite{ebpf} is a rapidly evolving subsystem in the Linux kernel that allows users to run sandboxed programs in kernel space without modifying the kernel itself~\cite{lim2024safebpf}. Originally developed for packet filtering, eBPF now supports diverse use cases such as performance tracing, security monitoring, and system observability, and has been expanded to multiple platforms~\cite{windows-ebpf,zheng2023bpftime}. The academic community has identified current problems and limitations of eBPF, proposing several works to improve aspects like the verifier and deployment.
 
 \subsection{Research Questions for Survey Evaluation}
 
-% To ensure that the LLM does not answer questions randomly, we evaluate the effectiveness and correctness of the \emph{\sys} results by exploring the following high-level research questions:
-To ensure that our multi-agent framework provides meaningful insights rather than random responses, we evaluate the effectiveness and correctness of the \sys results by exploring the following high-level research questions:
+To ensure meaningful insights rather than random responses, we evaluate \sys's effectiveness through the following research questions:
 
 \begin{itemize}
     \item \textbf{Correctness of Survey Responses:} How can we ensure that survey responses reflect accurate and relevant information about the system's features and commits?
@@ -27,7 +25,7 @@ To gain deeper insights into the design and evolution of the eBPF subsystem, we 
 
 \subsection{Implementing the Survey Using LLM Agents}
 
-To efficiently process and analyze the vast number of commits in the Linux eBPF subsystem, we leveraged the \sys framework to instantiate Empirically-Grounded Personas (as described in Section~\ref{sec:design}). Using CrewAI~\cite{crewai}, we created agents representing actual eBPF contributors such as the Alexei Starovoitov agent (eBPF maintainer), Brendan Gregg agent (observability expert), and KP Singh agent (security perspective). Each agent maintains personalized memory systems for their complete contribution history, email threads, and documented design philosophies. By utilizing GPT-4o~\cite{gpt4o} as based model with these memory-enhanced agents, we captured not just technical analysis but the authentic perspectives of real developers. We applied this approach to over 15,000 commits and 150,000+ emails, with agents responding based on their historical positions while revealing genuine disagreements that mirror actual community dynamics.
+Using CrewAI~\cite{crewai} and advanced reasoning models like o4-mini~\cite{o4mini}, we instantiated Empirically-Grounded Personas representing actual eBPF contributors, such as Alexei Starovoitov (maintainer), Brendan Gregg (observability), and KP Singh (security). Each agent maintains personalized memory systems containing their complete contribution history, email threads, and design philosophies, enabling authentic perspective-based analysis of over 15,000 commits and 150,000+ emails.
 
 \subsubsection{Commit Survey Methodology}
 
@@ -35,11 +33,11 @@ Following the workflow described in Section~\ref{sec:design}, each agent analyze
 
 The memory-augmented agents maintain consistency with their real-world counterpart's documented positions while allowing natural evolution of views based on new evidence.
 
-\subsubsection{Enhancing Survey Accuracy}
+% \subsubsection{Enhancing Survey Accuracy}
 
-Accuracy can be enhanced through: multiple survey runs (we ran once due to budget, achieving <1\% error), domain-specific fine-tuning or advanced models like O1~\cite{o1}, clearer prompts, and multi-step processes for complex commits.
+% Accuracy can be enhanced through: multiple survey runs (we ran once due to budget, achieving <1\% error), domain-specific fine-tuning or advanced models like Claude 4~\cite{claude4} or Gemini 2.5 Pro~\cite{gemini25}, clearer prompts, and multi-step processes for complex commits.
 
-LLM automation enabled efficient processing of tens of thousands of commits, transforming unstructured data into structured insights.
+% LLM automation enabled efficient processing of tens of thousands of commits, transforming unstructured data into structured insights.
 
 % \subsection{The Commit Dataset}
 
@@ -253,8 +251,7 @@ Our analysis of feature-component dependencies in Figure~\ref{fig:feature_compon
 
 \subsection{Survey Validation}
 
-% To validate the effectiveness of \sys, we employed multiple approaches. First, we discussed the results with more than five eBPF experts who have submitted kernel patches or presented at conferences; they confirmed that the findings align with their understanding of eBPF evolution. We also shared the report with kernel maintainers and the BPF kernel mailing list for broader validation. Second, the survey responses proved to be generally clear and actionable, with minimal ambiguity in the structured data extracted from commits. Third, by comparing survey responses with real-world feature changes and historical milestones (such as the release of libbpf 1.0 and the introduction of CO-RE), we confirmed that the survey accurately captures the historical context of eBPF development. The consistency between our automated analysis and expert knowledge demonstrates that \sys can effectively transform unstructured development artifacts into reliable, structured insights about software evolution.
-To validate the effectiveness of \sys and verify that it achieves the design goals outlined in Section~\ref{sec:design}, we employed multiple approaches. First, we discussed the multi-agent results with more than five eBPF experts who confirmed that the agent disagreements mirror real community tensions: maintainers indeed prioritize stability while contributors push features. We also shared the report with kernel maintainers and the BPF kernel mailing list, who validated that our virtual community accurately reflects real dynamics. Second, the multi-perspective responses revealed nuanced insights, with inter-agent disagreements highlighting genuine areas of community debate. Third, by comparing agent consensus patterns with real-world feature controversies (such as the BPF type format debates and verifier complexity discussions), we confirmed that \sys captures not just technical evolution but social dynamics. The correlation between agent disagreements and actual mailing list debates demonstrates that \sys effectively models how different stakeholders perceive kernel evolution, providing insights into collaboration patterns crucial for the FM era.
+To validate \sys's effectiveness, we: (1) discussed results with 5+ eBPF experts and kernel maintainers who confirmed agent disagreements mirror real community tensions (maintainers prioritize stability, contributors push features); (2) verified multi-perspective responses reveal nuanced insights, with inter-agent disagreements highlighting genuine community debates; (3) compared agent consensus patterns with real-world controversies (BPF type format debates, verifier complexity discussions), confirming \sys captures both technical evolution and social dynamics. The correlation between agent disagreements and actual mailing list debates demonstrates \sys effectively models stakeholder perspectives, providing insights into collaboration patterns crucial for the FM era.
 
 % \bibliographystyle{IEEEtran}
 % \bibliography{references}
