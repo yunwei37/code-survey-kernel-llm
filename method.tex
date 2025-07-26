@@ -1,9 +1,8 @@
 
-\section{\sys: A Multi-Agent Framework for Socio-Technical Analysis}
+\section{Design}
+\label{sec:design}
 
-To systematically analyze the decades of unstructured development history within the Linux kernel—a massive legacy codebase built long before the AI era—we designed \sys, a multi-agent framework that bridges the gap between pre-AI development artifacts and modern AI capabilities. Unlike single-model approaches and existing multi-agent systems~\cite{lmase2024,agent4se2024} that rely on generic roles, \sys's core principle is to create a high-fidelity simulation of the collaborative, role-based social structure of the open-source community itself. By instantiating \textbf{Empirically-Grounded Personas}—agents representing actual key developers—the framework captures the nuanced and often competing perspectives that shape the kernel's evolution, enabling AI systems to understand and work with legacy codebases containing decades of implicit knowledge.
-
-This socio-technical approach draws inspiration from established social science techniques, particularly survey methodology used in sociological research. By treating LLM agents as human participants in a socio-technical system, \sys employs carefully designed surveys that agents answer based on development artifacts (commits, emails, patches). This transforms unstructured artifacts—capable of scaling to 15,000+ commits and 150,000+ emails—into structured, analyzable datasets by capturing not just \emph{what} changed, but the diverse perspectives of the specific individuals who drove those changes.
+\sys creates a high-fidelity simulation of the open-source community's collaborative structure. Unlike existing multi-agent systems that rely on generic roles, \sys instantiates \textbf{Empirically-Grounded Personas}—agents representing actual key developers—to capture the nuanced perspectives that shape kernel evolution. The framework employs carefully designed surveys that agents answer based on development artifacts.
 
 \subsection{Design Goals}
 
