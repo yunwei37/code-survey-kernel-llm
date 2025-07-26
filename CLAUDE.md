@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a LaTeX academic research paper project, NOT a software development project. The paper presents "Code-Survey: An LLM-Driven Methodology for Analyzing Large-Scale Codebases" - a novel approach using LLMs to systematically extract insights from software development history.
+This is a LaTeX academic research paper project, NOT a software development project. The paper presents "\sys: An LLM-Driven Methodology for Analyzing Large-Scale Codebases" - a novel approach using LLMs to systematically extract insights from software development history.
 
 ## Build Commands
 
@@ -32,7 +32,7 @@ make force
 
 ### Main LaTeX Files
 - `conference_101719.tex` - Main paper file using ACM SIGCONF format
-- `method.tex` - Methodology section describing the Code-Survey approach
+- `method.tex` - Methodology section describing the \sys approach
 - `case-study.tex` - Case study applying methodology to Linux kernel eBPF
 - `limit-futurework.tex` - Limitations, best practices, and future work sections
 - `cite.bib` - Bibliography file with 41 references

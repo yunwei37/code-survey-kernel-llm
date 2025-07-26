@@ -1,11 +1,11 @@
-% \section{\emph{Code-Survey} Methodology}
+% \section{\emph{\sys} Methodology}
 \section{\sys Multi-Agent Framework}
 \label{sec:methodology}
 
-% This section outlines the \emph{Code-Survey} methodology, which integrates the expertise of human participants and the efficiency of Large Language Model (LLM) agents to convert unstructured software data—such as commit histories and mailing lists—into structured datasets suitable for analysis.
+% This section outlines the \emph{\sys} methodology, which integrates the expertise of human participants and the efficiency of Large Language Model (LLM) agents to convert unstructured software data—such as commit histories and mailing lists—into structured datasets suitable for analysis.
 This section presents the \sys multi-agent framework, which creates a virtual Linux community of specialized LLM agents to analyze kernel development. Unlike traditional single-model approaches, \sys employs multiple agents representing different stakeholder perspectives—maintainers, contributors, security experts, and historians—to convert unstructured software data such as commit histories and mailing lists into multi-perspective structured datasets. This approach directly addresses how inner and open-source collaboration will evolve in the FM era.
 
-% The central principle behind \emph{Code-Survey} is to treat LLMs as human participants in a survey-like process. While LLMs can process data more quickly and at lower costs than humans, they are also prone to errors, guesses, and limitations in specific domains, much like human participants~\cite{ji2023survey}. By leveraging traditional survey methodologies designed for humans, we can efficiently conduct LLM-based surveys while maintaining oversight and validation from human experts. Additionally, LLM agents can utilize traditional tools to automate analysis tasks.
+% The central principle behind \emph{\sys} is to treat LLMs as human participants in a survey-like process. While LLMs can process data more quickly and at lower costs than humans, they are also prone to errors, guesses, and limitations in specific domains, much like human participants~\cite{ji2023survey}. By leveraging traditional survey methodologies designed for humans, we can efficiently conduct LLM-based surveys while maintaining oversight and validation from human experts. Additionally, LLM agents can utilize traditional tools to automate analysis tasks.
 The central principle behind \sys is to model the Linux kernel community through specialized agents that embody different stakeholder perspectives. Each agent—Maintainer, Contributor, Security Expert, and Historian—processes kernel artifacts through their unique lens, similar to how real community members have different priorities and concerns~\cite{ji2023survey}. This multi-agent approach reveals how different stakeholders interpret the same changes differently, providing insights into collaboration dynamics. By leveraging agent consensus mechanisms and debate protocols, we can understand not just what changed, but how the community perceives these changes. This cognitive layer serves as a bridge between legacy kernel code and future AIware systems.
 
 \begin{figure}[t]
@@ -17,7 +17,7 @@ The central principle behind \sys is to model the Linux kernel community through
 
 \subsection{Workflow}
 
-% The \emph{Code-Survey} process follows a structured workflow, as illustrated in Figure~\ref{fig:workflow}:
+% The \emph{\sys} process follows a structured workflow, as illustrated in Figure~\ref{fig:workflow}:
 The \sys multi-agent process follows a structured workflow, as illustrated in Figure~\ref{fig:workflow}, where specialized agents collaborate to analyze kernel artifacts:
 
 % \begin{enumerate}
@@ -41,7 +41,7 @@ The \sys multi-agent process follows a structured workflow, as illustrated in Fi
 
 \end{enumerate}
 
-% This process employs an iterative design, allowing surveys to be refined based on analysis results, thereby creating a feedback loop that enhances data structuring and interpretation. By leveraging both LLMs and human oversight, the \emph{Code-Survey} methodology efficiently handles large volumes of unstructured software data. At each step, human experts can interactively contribute, or LLM agents can automate the process.
+% This process employs an iterative design, allowing surveys to be refined based on analysis results, thereby creating a feedback loop that enhances data structuring and interpretation. By leveraging both LLMs and human oversight, the \emph{\sys} methodology efficiently handles large volumes of unstructured software data. At each step, human experts can interactively contribute, or LLM agents can automate the process.
 This multi-agent process reveals collaboration patterns impossible to detect with single models. When agents disagree, it signals areas where real maintainers and contributors likely have different priorities—insights crucial for understanding how OSS collaboration evolves. The framework demonstrates that future kernel development will be AI-augmented rather than AI-replaced, with multi-agent systems serving as cognitive enhancers for human developers. By providing structured access to legacy code through modern interfaces, \sys shows how AIware can integrate with existing systems without disruptive rewrites.
 
 \subsection{Multi-Agent Architecture}
@@ -65,7 +65,7 @@ Our multi-agent framework consists of specialized agents that mirror the Linux k
 % \subsection{Survey Design with LLM Assistance}
 \subsection{Agent Interaction Protocol}
 
-% A key aspect of \emph{Code-Survey} is designing effective surveys to generate accurate data. Surveys can be designed by humans or LLM agents. We identify three key steps to guide LLM agents in designing surveys. The following prompts serve as a framework or LLM input for survey creation:
+% A key aspect of \emph{\sys} is designing effective surveys to generate accurate data. Surveys can be designed by humans or LLM agents. We identify three key steps to guide LLM agents in designing surveys. The following prompts serve as a framework or LLM input for survey creation:
 % 
 % \begin{enumerate}
 %     \item \textbf{Design High-Level Insightful Questions}: If you could ask every kernel developer to complete a survey or questionnaire about a commit or an email, what are the most insightful questions related to design, implementation, maintenance, reliability, and security? Describe the possible questions in detail.
@@ -96,4 +96,4 @@ This protocol reveals how collaboration patterns evolve in the FM era: agents au
 
 % \subsection{Best Practices}
 % 
-% To ensure reliable results when applying Code-Survey, several best practices should be followed. First, use predefined tags and categories in survey questions to minimize LLM hallucinations and standardize responses. Second, implement iterative LLM workflows with feedback loops and techniques like ReAct~\cite{yao2022react}, allowing models to refine their answers for improved accuracy. Third, include "I'm Not Sure" options to prevent misleading answers when the LLM encounters unfamiliar content. Fourth, conduct pilot testing to identify issues with question clarity before full deployment. Finally, design questions for consistency and perform validation checks to filter out contradictory responses. These practices help mitigate the risks of LLM limitations while maximizing the reliability of the structured data extracted from software development artifacts.
+% To ensure reliable results when applying \sys, several best practices should be followed. First, use predefined tags and categories in survey questions to minimize LLM hallucinations and standardize responses. Second, implement iterative LLM workflows with feedback loops and techniques like ReAct~\cite{yao2022react}, allowing models to refine their answers for improved accuracy. Third, include "I'm Not Sure" options to prevent misleading answers when the LLM encounters unfamiliar content. Fourth, conduct pilot testing to identify issues with question clarity before full deployment. Finally, design questions for consistency and perform validation checks to filter out contradictory responses. These practices help mitigate the risks of LLM limitations while maximizing the reliability of the structured data extracted from software development artifacts.

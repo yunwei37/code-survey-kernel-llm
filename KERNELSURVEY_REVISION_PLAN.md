@@ -1,7 +1,7 @@
-# KernelSurvey Revision Plan: Transforming Code-Survey into a Multi-Agent Framework
+# KernelSurvey Revision Plan: Transforming \sys into a Multi-Agent Framework
 
 ## Overview
-Transform the current "Code-Survey" paper into "KernelSurvey: A Multi-Agent LLM Framework for Understanding the Linux Kernel" to align with AIware 2025 conference themes.
+Transform the current "\sys" paper into "KernelSurvey: A Multi-Agent LLM Framework for Understanding the Linux Kernel" to align with AIware 2025 conference themes.
 
 ## Target Conference Themes
 1. **How will inner and open source collaboration evolve in the FM era?**
@@ -10,7 +10,7 @@ Transform the current "Code-Survey" paper into "KernelSurvey: A Multi-Agent LLM 
 ## Major Changes Required
 
 ### 1. Title and Positioning
-- **Old**: Code-Survey: An LLM-Driven Methodology for Analyzing Large-Scale Codebases
+- **Old**: \sys: An LLM-Driven Methodology for Analyzing Large-Scale Codebases
 - **New**: KernelSurvey: A Multi-Agent LLM Framework for Understanding the Linux Kernel
 
 ### 2. Core Narrative Transformation
