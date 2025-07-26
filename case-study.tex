@@ -31,19 +31,19 @@ To efficiently process and analyze the vast number of commits in the Linux eBPF 
 
 \subsubsection{Commit Survey Methodology}
 
-Our approach uses an AI model to analyze each commit's details and answer the survey questions. The process begins with data extraction, where we gather key commit details such as commit ID, author information, commit date, message, code changes, and associated emails. Next, we construct prompts containing the survey title, description, changed files, and commit details to guide the AI. The AI then processes these prompts, analyzing the commit message and code changes to respond to the survey. For each commit, the AI receives the commit details and survey questions, completes them, and generates structured output as JSON. If the AI's response is incomplete or inconsistent, it re-evaluates and revises the answers through a feedback loop to improve accuracy. Finally, the AI's responses are stored for later quantitative analysis.
+The AI analyzes commits through: (1) data extraction of commit details, (2) prompt construction with survey questions, (3) analysis of messages and code changes, (4) feedback loop for incomplete responses, and (5) code generation for quantitative analysis.
 
 We used the GPT-4o model for its strong language understanding and ability to handle technical content, making it well-suited for analyzing kernel commits.
 
 \subsubsection{Enhancing Survey Accuracy}
 
-Due to time and budget limitations, the AI's performance in this experiment can still be greatly improved. Several strategies can enhance accuracy. Running the survey multiple times and averaging results, similar to human surveys, can significantly reduce response variability. Due to budget limits, we ran it once per commit, and the results are already meaningful with less than 1\% error. Additionally, fine-tuning domain-specific LLMs for kernel development, or using more advanced models like O1~\cite{o1}, can capture technical nuances better. Crafting clearer prompts and survey questions will also improve response accuracy. Furthermore, using multi-step processes or multi-agent systems can help analyze complex commits more thoroughly.
+Accuracy can be enhanced through: multiple survey runs (we ran once due to budget, achieving <1\% error), domain-specific fine-tuning or advanced models like O1~\cite{o1}, clearer prompts, and multi-step processes for complex commits.
 
-Automating the survey with LLMs enabled us to efficiently process tens of thousands of commits, transforming unstructured data into structured insights.
+LLM automation enabled efficient processing of tens of thousands of commits, transforming unstructured data into structured insights.
 
 \subsection{The Commit Dataset}
 
-The \texttt{commit\_survey.csv} dataset provides detailed metadata for over 15,000 Linux kernel commits, including commit types, messages, timestamps, and affected components. It is used to categorize and classify commits, focusing on the eBPF subsystem.
+The \texttt{commit\_survey.csv} dataset provides metadata for over 15,000 Linux kernel commits, including commit types, messages, timestamps, and affected components. It categorizes and classifies commits, focusing on the eBPF subsystem.
 
 \subsubsection{Dataset Overview}
 
@@ -60,13 +60,13 @@ The dataset contains the following fields:
 
 \subsubsection{Key Findings from Dataset Analysis}
 
-Our analysis of the commit dataset reveals several important patterns in the eBPF subsystem development:
+Our analysis reveals several important patterns in eBPF subsystem development:
 
-\textbf{Commit Classification:} Most commits focus on bug fixes and code cleanups, reflecting ongoing efforts to maintain code quality. Significant attention is also given to testing infrastructure changes, emphasizing the importance of robustness. New features constitute a considerable portion of the commits, while merge commits are commonplace in the Linux kernel's development process.
+\textbf{Commit Classification:} Most commits focus on bug fixes and code cleanups, reflecting efforts to maintain code quality. Significant attention goes to testing infrastructure changes, emphasizing robustness. New features constitute a considerable portion of commits, while merge commits are commonplace in Linux kernel development.
 
-\textbf{Commit Complexity:} The majority of commits are simple, involving small changes, while more complex changes constitute a smaller but noteworthy portion. This distribution suggests that eBPF development follows an incremental improvement pattern.
+\textbf{Commit Complexity:} Most commits are simple, involving small changes, while complex changes constitute a smaller portion. This distribution suggests eBPF development follows an incremental improvement pattern.
 
-\textbf{Implementation Components:} Test cases and build scripts are significantly affected, highlighting continuous improvements in testing and build processes. The \texttt{libbpf} library is also a key component in the kernel eBPF toolchain, receiving considerable development attention. Additionally, substantial development occurs in other kernel subsystems, particularly related to eBPF events. The frequent updates to the eBPF verifier and helpers indicate ongoing efforts to enhance functionality and ensure program safety. Notably, some commits appear unrelated to the eBPF subsystem.
+\textbf{Implementation Components:} Test cases and build scripts are significantly affected, highlighting continuous testing and build improvements. The \texttt{libbpf} library is a key component in the kernel eBPF toolchain, receiving considerable attention. Substantial development occurs in other kernel subsystems, particularly eBPF events. Frequent updates to the verifier and helpers indicate efforts to enhance functionality and ensure program safety. Some commits appear unrelated to the eBPF subsystem.
 
 \textbf{Logic Components:} General utilities, such as tools and scripts, receive the most updates, followed by runtime features like helpers and kernel functions, which are consistently enhanced. eBPF event logic and instruction handling are also frequently updated to ensure robustness and functionality.
 
