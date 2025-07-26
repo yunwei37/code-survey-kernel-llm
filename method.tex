@@ -1,6 +1,6 @@
 % \section{\emph{\sys} Methodology}
-\section{\sys Multi-Agent Framework}
-\label{sec:methodology}
+\section{\sys Design}
+\label{sec:design}
 
 % This section outlines the \emph{\sys} methodology, which integrates the expertise of human participants and the efficiency of Large Language Model (LLM) agents to convert unstructured software data—such as commit histories and mailing lists—into structured datasets suitable for analysis.
 This section presents \sys, a multi-agent framework that creates a virtual Linux community to analyze kernel development. \sys employs specialized LLM agents representing different stakeholder perspectives (maintainers, contributors, security experts) to convert unstructured data into multi-perspective structured datasets, addressing collaboration evolution in the FM era.
@@ -46,13 +46,9 @@ Agent disagreements signal areas where real stakeholders have different prioriti
 
 \subsection{Multi-Agent Architecture}
 
-The framework consists of specialized agents:
-• \textbf{Survey-Designer}: Creates multi-perspective questions while minimizing bias
-• \textbf{Maintainer}: Focuses on stability and API compatibility
-• \textbf{Contributor}: Emphasizes features and innovation
-• \textbf{Security Expert}: Analyzes vulnerability patterns
-• \textbf{Adjudicator}: Performs consensus analysis and identifies divergences
-• \textbf{Data-Loader}: Transforms data into modern formats for AIware integration
+The framework creates digital twins of real kernel community members, where each agent represents an actual person who has contributed to or interacted with the eBPF subsystem. For example, a Linus Torvalds agent embodies the kernel creator's perspective on architectural integrity, while an Alexei Starovoitov agent represents the eBPF maintainer's focus on verifier safety and API stability. Similarly, agents for Daniel Borkmann (co-maintainer), Brendan Gregg (observability expert), and KP Singh (security developer) each bring their unique perspectives based on their historical contributions and documented positions. The framework can instantiate agents for any developer with sufficient contribution history, creating a diverse virtual community that mirrors the real kernel ecosystem.
+
+Each agent maintains dual memory systems that mirror how real developers accumulate knowledge. Short-term memory tracks recent commits, active discussions, and current patches under review, capturing the working context of ongoing debates and temporary opinions formed during active development. Long-term memory, accessed via RAG over the agent's complete contribution history, encompasses their full commit record, historical email threads indexed by topic and sentiment, past design decisions with rationales, evolution of coding style, and collaboration patterns with other developers. This memory architecture enables agents to retrieve relevant historical context when analyzing new commits—for instance, when reviewing a verifier change, an agent searches through past verifier bugs, security discussions, and design trade-offs to inform its current analysis, maintaining consistency with the real person's documented positions while allowing natural evolution based on new evidence.
 
 % \subsection{Survey Design with LLM Assistance}
 \subsection{Agent Interaction Protocol}
