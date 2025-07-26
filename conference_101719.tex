@@ -99,21 +99,6 @@ The Linux kernel represents one of humanity's most complex software artifacts, w
 To demonstrate the effectiveness of \sys, we apply it to the Linux kernel's eBPF subsystem. We construct the Linux-bpf dataset, comprising over 670 features and 16,000 commits from the Linux community. Our quantitative analysis uncovers important insights into the evolution of eBPF, such as development patterns, feature interdependencies, and areas requiring attention for reliability and security—insights that have been initially validated by eBPF experts. Furthermore, \sys can be directly applied to other subsystems within Linux and to other large-scale software projects. By providing a versatile tool for systematic analysis, \sys facilitates a deeper understanding of complex software systems, enabling improvements across a variety of domains and supporting a wide range of empirical studies. The code and dataset will be made available upon acceptance.
 \end{abstract}
 
-% \begin{abstract}
-% Researchers often refer to the Linux kernel as a background system, but do they truly understand how one of the world's largest systems is designed?\hq{what is `a background system'? I think we can just rephrase this sentence in a declarative way: Linux kernel is a fundamental component in computer science, but researchers fail to fully comprehend such complex system in design.}
-% Unlike research projects with clear design goals, real-world systems evolves as new features are continuously added over time. For instance, eBPF in Linux has gained significant attention in both industry and the community. While bpf\_link has been in the kernel for four years and plays a key role in connecting different runtime components to reduce complexity—supporting use cases like observability, security, networking, drivers, and even potential disk I/O and memory management—it remains rarely discussed outside of Linux source code.
-
-% With the rise of AI and LLM Agents, we propose the first approach to help researchers better understand real-world systems and uncover insights related to design, implementation, maintenance, reliability and security inside them. 
-% % \sys is the first step toward bridging the gap between design, implementation, maintenance, reliability and security in one of the largest system in the world. 
-% We introduce \sys, an automatic framework designed for transforming unstructured Linux kernel commits and emails into structured data, which enables human experts and LLM agents to efficiently query and analyze it.
-% To further verify the effectiveness of our \sys, we leverage the technique and construct the Linux-bpf dataset. Our new data consists of more than 670 features, 12k commits, and 150k mails in the Linux community.
-% Instead of generating code, answering documents or static analysis, the results reveal important insights about the eBPF subsystem\hq{What is the insight?}, confirmed by experts\hq{In which aspect?}. 
-% \sys can also be applied to other subsystems\hq{For example?} directly.
-
-% % We introduce \sys and the Linux-bpf dataset, which consist of 670+ features, 12k+ commits, 150k+ mails. Instead of generating code, answering documents or static analysis, \sys transforms unstructured Linux kernel commits and mails into structured data, enabling human experts or llm agents to query and analyze it. The results reveal important insights about the eBPF subsystem, confirmed by experts. \sys can also be applied to other subsystems directly.
-
-% \end{abstract}
-
 
 \maketitle
 
