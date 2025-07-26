@@ -41,42 +41,47 @@ Accuracy can be enhanced through: multiple survey runs (we ran once due to budge
 
 LLM automation enabled efficient processing of tens of thousands of commits, transforming unstructured data into structured insights.
 
-\subsection{The Commit Dataset}
+% \subsection{The Commit Dataset}
 
-The \texttt{commit\_survey.csv} dataset provides metadata for over 15,000 Linux kernel commits, including commit types, messages, timestamps, and affected components. It categorizes and classifies commits, focusing on the eBPF subsystem.
+% The \texttt{commit\_survey.csv} dataset provides metadata for over 15,000 Linux kernel commits, including commit types, messages, timestamps, and affected components. It categorizes and classifies commits, focusing on the eBPF subsystem.
 
-\subsubsection{Dataset Overview}
+% \subsubsection{Dataset Overview}
 
-The dataset contains the following fields:
+% The dataset contains the following fields:
 
-\begin{itemize}
-    \item \textbf{Commit Metadata}: Unique commit IDs, author and committer details, and timestamps.
-    \item \textbf{Commit Messages and File Changes}: Descriptions of the changes in each commit.
-    \item \textbf{Classification}: Types such as bug fixes, feature additions, or merges.
-    \item \textbf{Complexity}: Based on the number of files and lines changed.
-    \item \textbf{Components}: Affected implementation and logic components.
-    \item \textbf{Use Cases}: Related subsystems and modules.
-\end{itemize}
+% \begin{itemize}
+%     \item \textbf{Commit Metadata}: Unique commit IDs, author and committer details, and timestamps.
+%     \item \textbf{Commit Messages and File Changes}: Descriptions of the changes in each commit.
+%     \item \textbf{Classification}: Types such as bug fixes, feature additions, or merges.
+%     \item \textbf{Complexity}: Based on the number of files and lines changed.
+%     \item \textbf{Components}: Affected implementation and logic components.
+%     \item \textbf{Use Cases}: Related subsystems and modules.
+% \end{itemize}
 
-\subsubsection{Key Findings from Dataset Analysis}
+% \subsubsection{Key Findings from Dataset Analysis}
 
-Our analysis reveals several important patterns in eBPF subsystem development:
+% Our analysis reveals several important patterns in eBPF subsystem development:
 
-\textbf{Commit Classification:} Most commits focus on bug fixes and code cleanups, reflecting efforts to maintain code quality. Significant attention goes to testing infrastructure changes, emphasizing robustness. New features constitute a considerable portion of commits, while merge commits are commonplace in Linux kernel development.
+% \textbf{Commit Classification:} Most commits focus on bug fixes and code cleanups, reflecting efforts to maintain code quality. Significant attention goes to testing infrastructure changes, emphasizing robustness. New features constitute a considerable portion of commits, while merge commits are commonplace in Linux kernel development.
 
-\textbf{Commit Complexity:} Most commits are simple, involving small changes, while complex changes constitute a smaller portion. This distribution suggests eBPF development follows an incremental improvement pattern.
+% \textbf{Commit Complexity:} Most commits are simple, involving small changes, while complex changes constitute a smaller portion. This distribution suggests eBPF development follows an incremental improvement pattern.
 
-\textbf{Implementation Components:} Test cases and build scripts are significantly affected, highlighting continuous testing and build improvements. The \texttt{libbpf} library is a key component in the kernel eBPF toolchain, receiving considerable attention. Substantial development occurs in other kernel subsystems, particularly eBPF events. Frequent updates to the verifier and helpers indicate efforts to enhance functionality and ensure program safety. Some commits appear unrelated to the eBPF subsystem.
+% \textbf{Implementation Components:} Test cases and build scripts are significantly affected, highlighting continuous testing and build improvements. The \texttt{libbpf} library is a key component in the kernel eBPF toolchain, receiving considerable attention. Substantial development occurs in other kernel subsystems, particularly eBPF events. Frequent updates to the verifier and helpers indicate efforts to enhance functionality and ensure program safety. Some commits appear unrelated to the eBPF subsystem.
 
-\textbf{Logic Components:} General utilities, such as tools and scripts, receive the most updates, followed by runtime features like helpers and kernel functions, which are consistently enhanced. eBPF event logic and instruction handling are also frequently updated to ensure robustness and functionality.
+% \textbf{Logic Components:} General utilities, such as tools and scripts, receive the most updates, followed by runtime features like helpers and kernel functions, which are consistently enhanced. eBPF event logic and instruction handling are also frequently updated to ensure robustness and functionality.
 
-\textbf{Use Cases and Events:} While most commits enhance the core eBPF infrastructure—including the verifier and runtime components—significant development also extends to networking-related features such as socket and XDP programs, which receive substantial attention. Additionally, tracing tools like tracepoints and kprobes highlight eBPF's crucial role in system diagnostics and debugging.
+% \textbf{Use Cases and Events:} While most commits enhance the core eBPF infrastructure—including the verifier and runtime components—significant development also extends to networking-related features such as socket and XDP programs, which receive substantial attention. Additionally, tracing tools like tracepoints and kprobes highlight eBPF's crucial role in system diagnostics and debugging.
+
+
+\subsection{Development Artifacts: Commits and Communications}
+
+Our analysis encompasses over 15,000 Linux kernel commits and 150,000+ mailing list emails from the eBPF subsystem, captured in the \texttt{commit\_survey.csv} dataset. This comprehensive dataset includes commit metadata (IDs, authors, timestamps), commit messages and file changes, classification categories (bug fixes, features, merges), complexity metrics based on files and lines changed, affected components (implementation and logic), and related use cases and subsystems. The email corpus provides additional context about design decisions, community discussions, and feature evolution that complements the commit data.
+
+Key findings reveal distinct development patterns: Most commits focus on bug fixes and code cleanups, with significant attention to testing infrastructure, reflecting the community's emphasis on stability and robustness. The complexity distribution shows predominantly simple, incremental changes, characteristic of mature kernel development. Implementation analysis highlights that test cases and build scripts receive the most updates, while the \texttt{libbpf} library receives considerable attention. Frequent updates to the verifier and helpers indicate efforts to enhance functionality and ensure program safety. Notably, some commits appear unrelated to the eBPF subsystem due to broad filtering criteria. For logic components, general utilities receive the most updates, followed by runtime features like helpers and kernel functions. Networking features (socket, XDP) and tracing tools (kprobes, tracepoints) represent major development areas, underscoring eBPF's dual role in both network processing and system observability. The email discussions reveal heated debates around verifier complexity, API stability, and the balance between feature velocity and kernel maintainability—tensions that our multi-agent framework captures through divergent agent perspectives.
 
 \subsection{Correctness of Survey Responses}
 
 To ensure that the survey responses accurately reflect system features and commits, we validated the results by randomly sampling the data and cross-referencing with expert knowledge and processing logs. Specifically, we addressed two common issues: the handling of merge commits and the identification of commits unrelated to the eBPF subsystem.
-
-\subsubsection{Merge Commit Correctness}
 
 We observed discrepancies in how merge commits were classified between the commit classification and the major implementation component perspectives. To address this, we analyzed the top merge commit messages and found that some merge commits were categorized based on their predominant effect on a specific component rather than being uniformly labeled as merge commits. By clarifying this distinction in the survey questions, we ensured that the classification system accurately reflected the commit's impact across different perspectives.
 
